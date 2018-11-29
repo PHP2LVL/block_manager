@@ -1,0 +1,23 @@
+.idea
+.project
+priedai/conf.php
+sandeliukas/*
+sandeliukas/!.htaccess
+images/nuorodu/*
+images/nuorodu/!index.html
+images/avatars/*
+images/avatars/!no_avatar.png
+siuntiniai/failai/*
+siuntiniai/failai/!index.html
+siuntiniai/images/*
+siuntiniai/images/!index.html
+siuntiniai/media/*
+siuntiniai/media/!index.html
+
+//for dev
+.history
+install-
+install--
+install/node_modules
+.htaccess
+priedai/conf.php
