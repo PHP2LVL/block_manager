@@ -105,5 +105,22 @@ $buttons = [
             'value'	=> $lang['admin']['configuration_maintenance'],
             'icon'	=> adminIcon('configuration', 'maintenance')
         ]
+    ],
+    'pageAssembler' => [
+        [
+            'url' 	=> url("?id,999;a,pageAssembler;c,main"),
+            'value'	=> $lang['admin']['pageassembler_add'],
+            'icon'	=> adminIcon('blocks', 'main')
+        ],
+        [
+            'url' 	=> url("?id,999;a,pageAssembler;c,list"),
+            'value'	=> $lang['admin']['pageassembler_list'],
+            'icon'	=> adminIcon('blocks', 'list')
+        ],
+        [
+            'url' 	=> url("?id,999;a,pageAssembler;c,settings"),
+            'value'	=> $lang['admin']['pageassembler_settings'],
+            'icon'	=> adminIcon('blocks', 'settings')
+        ]
     ]
 ];
