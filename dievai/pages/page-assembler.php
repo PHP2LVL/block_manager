@@ -12,6 +12,80 @@ if(BUTTONS_BLOCK) {
 }
 
 if (isset($url['c'])) {
+    if ($url['c'] == 'seo') {
+        if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
+            $q = [];
+            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['Pavadinimas'] ) . ",'Puslapio pavadinimas')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['Pavadinimas'] ) . "";
+            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['metaPavadinimas'] ) . ",'Meta pavadinimas')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['metaPavadinimas'] ) . "";
+            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['metaAprasymas'] ) . ",'Meta aprasymas')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['metaAprasymas'] ) . "";
+            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['metaKeywords'] ) . ",'Meta Keywords')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['metaKeywords'] ) . "";
+            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['F_urls'] ) . ",'F_urls')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['F_urls'] );
+            foreach ($q as $sql) {
+                mysql_query($sql);
+            }
+            delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
+            
+            redirect(
+                url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
+                "header",
+                [
+                    'type'      => 'success',
+                    'message'   => $lang['admin']['configuration_updated']
+                ]
+            );
+
+        }
+        $settings = [
+            "Form" => [
+                "action"    => "", 
+                "method"    => "post", 
+                "enctype"   => "", 
+                "id"        => "", 
+                "class"     => "", 
+                "name"      => "reg"
+            ],
+            $lang['admin']['title']  => [
+                "type"  => "text", 
+                "value" => input( $pageConfig['Pavadinimas'] ), 
+                "name"  => "Pavadinimas"
+            ],
+            $lang['admin']['metaTitle']  => [
+                "type"  => "text", 
+                "value" => input( $pageConfig['metaTitle'] ), 
+                "name"  => "metaPavadinimas"
+            ],
+            $lang['admin']['metaDescription']  => [
+                "type"  => "text", 
+                "value" => input( $pageConfig['metaDescription'] ), 
+                "name"  => "metaAprasymas"
+            ],
+            $lang['admin']['metaKeywords']  => [
+                "type"  => "text", 
+                "value" => input( $pageConfig['metaKeywords'] ), 
+                "name"  => "metaKeywords"
+            ],
+            
+            "Friendly url:"             => [
+                "type"      => "select", 
+                "value"     =>  [
+                    '/'=> '/', 
+                    ';'=> ';', 
+                    '0'=> $lang['admin']['off']
+                ], 
+                "selected"  => $pageConfig['F_urls'], 
+                "name"      => "F_urls"
+            ],
+            ""                                     => [
+                "type"      => "submit", 
+                "name"      => "Konfiguracija", 
+                "value"     => $lang['admin']['save'], 
+                'form_line' => 'form-not-line',
+            ]
+        ];
+        $formClass = new Form($settings);
+        lentele($lang['admin']['configuration_seo'], $formClass->form());
+
+    }
     if ($url['c'] == 'main') {
         $settings = [ 
             "Form" => [
@@ -21,10 +95,23 @@ if (isset($url['c'])) {
                 "id" 		=> "", 
                 "class" 	=> "", 
                 "name" 		=> "reg"
+            ],
+            $lang['admin']['email']           => [
+                "type"  => "text", 
+                "value" => input($conf['Pastas']), 
+                "name"  => "Pastas"
+            ],
+            ""                                     => [
+                "type"      => "submit", 
+                "name"      => "Konfiguracija", 
+                "value"     => $lang['admin']['save'], 
+                'form_line' => 'form-not-line',
             ]
         ];
+        
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
+        
         ?>
 
         <div id="page-builder-zone">
