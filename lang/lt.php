@@ -18,6 +18,10 @@ $lang['setup']['lang'] = 'Kalba';
 $lang['setup']['url'] = 'Tinklapio url adresas';
 $lang['setup']['url_info'] = 'Įveskite pagrindinį tinklapio adresą';
 $lang['setup']['heading'] = 'MightMedia TVS įdiegimas';
+$lang['admin']['title'] = 'Title';
+$lang['admin']['metaTitle'] = 'Meta pavadinimas';
+$lang['admin']['metaDescription'] = 'Meta aprašymas';
+$lang['admin']['metaKeywords'] = 'Meta raktazodziai';
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
 $lang['admin']['poll_active_q'] = 'Aktyvumas';
