@@ -1,6 +1,7 @@
 
 <?php
 include_once '/../functions/functions.pageassembler.php';
+//include '/../functions/functions.pageassembler.php';
 echo '<link rel="stylesheet" href="css/page-assembler.css">';
 
 if ( !defined( "OK" ) ) {
@@ -13,18 +14,23 @@ if(BUTTONS_BLOCK) {
 
 if (isset($url['c'])) {
     if ($url['c'] == 'main') {
+
         if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
-            $q = [];
-            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings` (`val`,`key`) VALUES (" . escape( $_POST['Pavadinimas'] ) . ",'title')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['Pavadinimas'] ) . "";
-            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings` (`val`,`key`) VALUES (" . escape( $_POST['metaPavadinimas'] ) . ",'meta_title')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['metaPavadinimas'] ) . "";
-            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings` (`val`,`key`) VALUES (" . escape( $_POST['metaAprasymas'] ) . ",'mneta_desc')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['metaAprasymas'] ) . "";
-            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings` (`val`,`key`) VALUES (" . escape( $_POST['metaKeywords'] ) . ",'meta_keywords')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['metaKeywords'] ) . "";
-            $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings` (`val`,`key`) VALUES (" . escape( $_POST['F_urls'] ) . ",'friendly_url')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['F_urls'] );
-            foreach ($q as $sql) {
-                mysql_query($sql);
+            $title =  escape($_POST['Pavadinimas']);
+            $metaTitle = escape($_POST['metaPavadinimas']);
+            $metaDescription =  escape($_POST['metaAprasymas']);
+            $metaKeywords = escape($_POST['metaKeywords']);
+            $friendlyUrl = escape($_POST['F_urls']);
+            $request = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
+            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
+            VALUES ($title,$metaTitle,$metaDescription,$metaKeywords,$friendlyUrl)";
+            if (pageAssemblerDBexist("pa_page_settings")){
+                echo mysql_query1($request);    
             }
-            delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
             
+            /*
+            delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
+            */
             redirect(
                 url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
                 "header",
