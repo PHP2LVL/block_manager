@@ -82,48 +82,48 @@ if (isset($url['c'])) {
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
                 <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
+                    <!-- <div class='block-edit-bar'>
                         <button type="button" class="btn bg-deep-purple waves-effect">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
-                    </div>
+                    </div> -->
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
                 <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
+                    <!-- <div class='block-edit-bar'>
                         <button type="button" class="btn bg-deep-purple waves-effect">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
-                    </div>
+                    </div> -->
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
                 <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
+                    <!-- <div class='block-edit-bar'>
                         <button type="button" class="btn bg-deep-purple waves-effect">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
-                    </div>
+                    </div> -->
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
                 <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
+                    <!-- <div class='block-edit-bar'>
                         <button type="button" class="btn bg-deep-purple waves-effect">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
-                    </div>
+                    </div> -->
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
                 <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
+                    <!-- <div class='block-edit-bar'>
                         <button type="button" class="btn bg-deep-purple waves-effect">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
-                    </div>
+                    </div> -->
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
             </div>
