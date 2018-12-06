@@ -1,5 +1,6 @@
 
 <?php
+
 include_once '/../functions/functions.pageassembler.php';
 echo '<link rel="stylesheet" href="css/page-assembler.css">';
 
