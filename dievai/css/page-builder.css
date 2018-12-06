@@ -56,3 +56,26 @@
     width: 33%;
     text-align: justify;
 }
+
+/* Block Menu */
+
+
+.dropdown-submenu {
+    position:relative;
+    background-color:#FF5722;
+    color:black;
+}
+
+.dropdown-submenu .dropdown-menu {
+    background-color:#FF5722;
+    color:black;
+    top: 0px;
+    left: 100%;
+    margin-top: -25px;
+}
+
+
+#page-builder-zone .row {
+    margin-bottom: 10px;
+    border: 2px dashed black
+}
