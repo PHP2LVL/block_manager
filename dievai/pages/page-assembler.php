@@ -139,10 +139,8 @@ if (isset($url['c'])) {
         var_dump($data);
         ?>
         </div>
-<<<<<<< HEAD
         <script src="js/blocks.js"></script>
         <script src="../dievai/js/manuimage.js"></script>
-=======
 
        
         <div class="col-lg-12">
@@ -153,7 +151,6 @@ if (isset($url['c'])) {
         </div>
         
         <script type="text/javascript" src="js/page-assembler.js"></script>
->>>>>>> Drag/replace js function
     <?php }  
     if ($url['c'] == 'list') {
         $settings = [ 

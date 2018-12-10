@@ -63,8 +63,6 @@
     width: 33%;
     text-align: justify;
 }
-<<<<<<< HEAD:dievai/css/page-builder.css
-
 /* Block Menu */
 
 
@@ -85,7 +83,7 @@
 
 #page-builder-zone .row {
     margin-bottom: 10px;
-    border: 2px dashed black;
+    /* border: 2px dashed black; */
 }
 
 .block-item {
@@ -108,7 +106,6 @@
     opacity: 1;
     transition: opacity .5s ease;
 }
-=======
 .box {
     position: relative;
     top: 5px;
@@ -141,4 +138,3 @@
     margin: auto;
     position: relative;
   }
->>>>>>> Drag/replace js function:dievai/css/page-assembler.css
