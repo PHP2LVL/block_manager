@@ -1,7 +1,7 @@
 
 <?php
+
 include_once '/../functions/functions.pageassembler.php';
-//include '/../functions/functions.pageassembler.php';
 echo '<link rel="stylesheet" href="css/page-assembler.css">';
 
 if ( !defined( "OK" ) ) {
@@ -14,40 +14,37 @@ if(BUTTONS_BLOCK) {
 
 if (isset($url['c'])) {
     if ($url['c'] == 'main') {
+        $settings = [ 
+            "Form" => [
+                "action" 	=> "", 
+                "method" 	=> "post", 
+                "enctype" 	=> "", 
+                "id" 		=> "", 
+                "class" 	=> "", 
+                "name" 		=> "reg"
+            ]
+        ];
+        $formClass = new Form($settings);
+        lentele($lang['admin']['pageassembler_add'], $formClass->form());
+        ?>
 
-        if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
-            $title =  escape($_POST['Pavadinimas']);
-            $metaTitle = escape($_POST['metaPavadinimas']);
-            $metaDescription =  escape($_POST['metaAprasymas']);
-            $metaKeywords = escape($_POST['metaKeywords']);
-            $friendlyUrl = escape($_POST['F_urls']);
-            $request = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
-            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
-            VALUES ($title,$metaTitle,$metaDescription,$metaKeywords,$friendlyUrl)";
-            if (pageAssemblerDBexist("pa_page_settings")){
-                echo mysql_query1($request);    
-            }
-            
-            /*
-            delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
-            */
-            redirect(
-                url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
-                "header",
-                [
-                    'type'      => 'success',
-                    'message'   => $lang['admin']['configuration_updated']
-                ]
-            );
-            ?>
-             <div id="page-builder-zone">
+        
+
+        <div id="page-builder-zone">
 
         <!-- 
             ZONA BLOKŲ DĖLIOJIMUI 
             IR PUSLAPIO KONSTRAVIMUI
         -->
+            <!-- <div class="manu-image-area">img</div> -->
             <div class="row">
-                <div class="col-lg-12 crop">
+                <div class="col-lg-12 crop block-item">
+                    <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                     <img src="https://motionarray-portfolio.imgix.net/preview-83721-73b2ffab8d22cad99c5c66f9b51b4993-high.jpg" class="img-fluid max-width"  alt="Snow">
                     <H1 class="top-left">Welcome to Page Assembler</h1>
                     <p class="left-centered">Mauris dui enim, commodo at hendrerit a, pulvinar ut felis. Aliquam eu est ut nisi tincidunt facilisis. Phasellus porttitor vehicula eros, eget fermentum ex consequat vel. Nam fermentum, tortor quis congue maximus, magna dui mollis enim, vel efficitur ligula magna in urna. In interdum ipsum sit amet commodo lobortis. Aliquam erat volutpat. Morbi vitae nisi quis urna semper bibendum. Aenean hendrerit vel mi sit amet fringilla. Nunc convallis dui sed ultrices rhoncus. Vestibulum ac pulvinar erat. Proin dignissim ultricies metus eu luctus. Vivamus in bibendum quam. Aenean non fermentum nisi, a ultrices nisl. Sed sit amet tincidunt est. Nulla sit amet nibh turpis. Curabitur a finibus enim, a volutpat justo.</p>
@@ -55,87 +52,103 @@ if (isset($url['c'])) {
                 </div>
             </div>
             <div class="row d-flex">
+                <div class="col-lg-8 crop block-item">
+                    <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                 <div class="col-lg-8 crop">
+                    <div class='block-edit-bar block-item'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
                 <div class="col-lg-4 text-justify pt-4">
-                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
+                    <div class='block-edit-bar block-item'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
+                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
                 </div>
             </div>
             <div class="row-fluid">
-                <div class="col-lg-2 crop">
+                <div class='block-edit-bar block-item'>
+                    <button type="button" class="btn bg-deep-purple waves-effect">
+                        <i class="material-icons">settings</i>
+                        <span>SETTINGS</span>
+                    </button>
+                </div>
+                <!-- <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div> -->
+                <div class="col-lg-2 crop block-item">
+                    <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
-                <div class="col-lg-2 crop">
+                <div class="col-lg-2 crop block-item">
+                    <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
-                <div class="col-lg-2 crop">
+                <div class="col-lg-2 crop block-item">
+                    <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
-                <div class="col-lg-2 crop">
+                <div class="col-lg-2 crop block-item">
+                    <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
-                <div class="col-lg-2 crop">
+                <div class="col-lg-2 crop block-item">
+                    <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
-                <div class="col-lg-2 crop">
+                <div class="col-lg-2 crop block-item">
+                    <div class='block-edit-bar'>
+                        <button type="button" class="btn bg-deep-purple waves-effect">
+                            <i class="material-icons">settings</i>
+                            <span>SETTINGS</span>
+                        </button>
+                    </div>
                     <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
             </div>
         </div>
-       <?php }
-        //
-        $settings = [
-            "Form" => [
-                "action"    => "", 
-                "method"    => "post", 
-                "enctype"   => "", 
-                "id"        => "", 
-                "class"     => "", 
-                "name"      => "reg"
-            ],
-            $lang['admin']['title']  => [
-                "type"  => "text", 
-                "value" => input( $pageConfig['Pavadinimas'] ), 
-                "name"  => "Pavadinimas"
-            ],
-            $lang['admin']['metaTitle']  => [
-                "type"  => "text", 
-                "value" => input( $pageConfig['metaTitle'] ), 
-                "name"  => "metaPavadinimas"
-            ],
-            $lang['admin']['metaDescription']  => [
-                "type"  => "text", 
-                "value" => input($pageConfig['metaDescription'] ), 
-                "name"  => "metaAprasymas"
-            ],
-            $lang['admin']['metaKeywords']  => [
-                "type"  => "text", 
-                "value" => input( $pageConfig['metaKeywords'] ), 
-                "name"  => "metaKeywords"
-            ],
-            
-            "Friendly url:"             => [
-                "type"      => "select", 
-                "value"     =>  [
-                    '/'=> '/', 
-                    ';'=> ';', 
-                    '0'=> $lang['admin']['off']
-                ], 
-                "selected"  => $pageConfig['F_urls'], 
-                "name"      => "F_urls"
-            ],
-            ""                                     => [
-                "type"      => "submit", 
-                "name"      => "Konfiguracija", 
-                "value"     => $lang['admin']['save'], 
-                'form_line' => 'form-not-line',
-            ]
-        ];
-        $formClass = new Form($settings);
-        lentele($lang['admin']['configuration_seo'], $formClass->form());
-
-    } 
+        <script src="../dievai/js/manuimage.js"></script>
+    <?php }  
     if ($url['c'] == 'list') {
         $settings = [ 
             "Form" => [
