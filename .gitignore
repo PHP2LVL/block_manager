@@ -6,6 +6,7 @@ sandeliukas/!.htaccess
 images/nuorodu/*
 images/nuorodu/!index.html
 images/avatars/*
+images/galerija/*
 images/avatars/!no_avatar.png
 siuntiniai/failai/*
 siuntiniai/failai/!index.html
@@ -21,3 +22,4 @@ install--
 install/node_modules
 .htaccess
 priedai/conf.php
+old/*
