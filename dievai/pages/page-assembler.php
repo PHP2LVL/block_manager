@@ -85,12 +85,6 @@ if (isset($url['c'])) {
                         <span>SETTINGS</span>
                     </button>
                 </div>
-                <!-- <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
-                    </div> -->
                 <div class="col-lg-2 crop block-item">
                     <div class='block-edit-bar'>
                         <button type="button" class="btn bg-deep-purple waves-effect">
@@ -147,7 +141,7 @@ if (isset($url['c'])) {
                 </div>
             </div>
         </div>
-        <script src="../dievai/js/manuimage.js"></script>
+        <script src="../dievai/js/menuclick.js"></script>
     <?php }  
     if ($url['c'] == 'list') {
         $settings = [ 
