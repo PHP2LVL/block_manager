@@ -70,6 +70,7 @@
     padding: 5px;
     width: 100%;
     transition: opacity .5s ease;
+    z-index: 9;
 }
 
 .block-item:hover .block-edit-bar {

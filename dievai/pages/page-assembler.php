@@ -36,7 +36,6 @@ if (isset($url['c'])) {
             ZONA BLOKŲ DĖLIOJIMUI 
             IR PUSLAPIO KONSTRAVIMUI
         -->
-            <!-- <div class="manu-image-area">img</div> -->
             <div class="row">
                 <div class="col-lg-12 crop block-item">
                     <div class='block-edit-bar'>
@@ -51,99 +50,52 @@ if (isset($url['c'])) {
                     <button type="submit" class ="bottom-right">BUTTON</button>
                 </div>
             </div>
-            <div class="row d-flex">
-                <div class="col-lg-8 crop block-item">
-                    <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
-                    </div>
-                <div class="col-lg-8 crop">
+            <div class="row">
+                <div class="col-lg-12 crop block-item">
                     <div class='block-edit-bar block-item'>
                         <button type="button" class="btn bg-deep-purple waves-effect">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
+                    </div>      
+                    <div class="row">      
+                        <div class="col-lg-8 crop">
+                            <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
+                        </div>
+                        <div class="col-lg-4 text-justify pt-4">
+                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
+                        </div>
                     </div>
-                    <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
-                </div>
-                <div class="col-lg-4 text-justify pt-4">
-                    <div class='block-edit-bar block-item'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
-                    </div>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
                 </div>
             </div>
-            <div class="row-fluid">
-                <div class='block-edit-bar block-item'>
-                    <button type="button" class="btn bg-deep-purple waves-effect">
-                        <i class="material-icons">settings</i>
-                        <span>SETTINGS</span>
-                    </button>
-                </div>
-                <!-- <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
-                    </div> -->
-                <div class="col-lg-2 crop block-item">
+            <div class="row">
+                <div class="col-lg-12 crop block-item">
                     <div class='block-edit-bar'>
                         <button type="button" class="btn bg-deep-purple waves-effect">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
                     </div>
-                    <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
-                </div>
-                <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
+                    <div class="row">      
+                        <div class="col-lg-2 crop block-item">
+                            <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
+                        </div>
+                        <div class="col-lg-2 crop block-item">
+                            <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
+                        </div>
+                        <div class="col-lg-2 crop block-item">
+                            <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
+                        </div>
+                        <div class="col-lg-2 crop block-item">
+                            <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
+                        </div>
+                        <div class="col-lg-2 crop block-item">
+                            <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
+                        </div>
+                        <div class="col-lg-2 crop block-item">
+                            <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
+                        </div>
                     </div>
-                    <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
-                </div>
-                <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
-                    </div>
-                    <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
-                </div>
-                <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
-                    </div>
-                    <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
-                </div>
-                <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
-                    </div>
-                    <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
-                </div>
-                <div class="col-lg-2 crop block-item">
-                    <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
-                            <i class="material-icons">settings</i>
-                            <span>SETTINGS</span>
-                        </button>
-                    </div>
-                    <img src="https://image.shutterstock.com/z/stock-vector-colorful-geometric-background-fluid-shapes-composition-eps-vector-1033073062.jpg" class="img-fluid max-width"  alt="Snow">
                 </div>
             </div>
         </div>
