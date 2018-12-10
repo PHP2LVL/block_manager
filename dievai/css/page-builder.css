@@ -57,6 +57,7 @@
     text-align: justify;
 }
 
+<<<<<<< HEAD:dievai/css/page-builder.css
 /* Block Menu */
 
 
@@ -78,4 +79,24 @@
 #page-builder-zone .row {
     margin-bottom: 10px;
     border: 2px dashed black;
+=======
+.block-item {
+    position: relative;
+}
+
+.block-edit-bar {
+    opacity: 0;
+    background-color: #00000082;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    width: 100%;
+    transition: opacity .5s ease;
+}
+
+.block-item:hover .block-edit-bar {
+    opacity: 1;
+    transition: opacity .5s ease;
+>>>>>>> c3a26b4957e7c8b52d039c0772c5922675be6ea1:dievai/css/page-assembler.css
 }
