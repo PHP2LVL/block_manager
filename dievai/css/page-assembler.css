@@ -2,7 +2,14 @@
 
     overflow: hidden;
 }
-
+/*
+.row {
+    background: #e9c5c5;
+}
+*/
+.max-plotis{
+    max-width: 100% !important;
+  }
 .crop img {
     width: 100%;
     height: auto;
@@ -56,3 +63,35 @@
     width: 33%;
     text-align: justify;
 }
+.box {
+    position: relative;
+    top: 5px;
+    left: 5px;
+    cursor: pointer;
+    border: 2px dotted grey;
+  }
+  
+  .held {
+    border: solid 10px black;
+    background-color: black;
+  }
+  
+  .holder {
+    /*border: solid 5px black;
+    background-color: white;
+    */display: inline-block;
+  }
+  
+  .hovered {
+    border: dotted 5px black;
+    opacity: 0.25;
+  }
+  
+  .invisible {
+    display: none;
+  }
+  
+  #container {
+    margin: auto;
+    position: relative;
+  }
