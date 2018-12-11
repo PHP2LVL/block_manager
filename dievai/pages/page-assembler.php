@@ -38,9 +38,9 @@ if (isset($url['c'])) {
         -->
             <!-- <div class="manu-image-area">img</div> -->
             <div class="row">
-                <div class="col-lg-12 crop block-item">
+                <div class="col-lg-12 crop block-item insert-place">
                     <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -54,14 +54,14 @@ if (isset($url['c'])) {
             <div class="row d-flex">
                 <div class="col-lg-8 crop block-item">
                     <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
                     </div>
                 <div class="col-lg-8 crop">
                     <div class='block-edit-bar block-item'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -70,7 +70,7 @@ if (isset($url['c'])) {
                 </div>
                 <div class="col-lg-4 text-justify pt-4">
                     <div class='block-edit-bar block-item'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -80,14 +80,14 @@ if (isset($url['c'])) {
             </div>
             <div class="row-fluid">
                 <div class='block-edit-bar block-item'>
-                    <button type="button" class="btn bg-deep-purple waves-effect">
+                    <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         <i class="material-icons">settings</i>
                         <span>SETTINGS</span>
                     </button>
                 </div>
                 <div class="col-lg-2 crop block-item">
                     <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -96,7 +96,7 @@ if (isset($url['c'])) {
                 </div>
                 <div class="col-lg-2 crop block-item">
                     <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -105,7 +105,7 @@ if (isset($url['c'])) {
                 </div>
                 <div class="col-lg-2 crop block-item">
                     <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -114,7 +114,7 @@ if (isset($url['c'])) {
                 </div>
                 <div class="col-lg-2 crop block-item">
                     <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -123,7 +123,7 @@ if (isset($url['c'])) {
                 </div>
                 <div class="col-lg-2 crop block-item">
                     <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -132,7 +132,7 @@ if (isset($url['c'])) {
                 </div>
                 <div class="col-lg-2 crop block-item">
                     <div class='block-edit-bar'>
-                        <button type="button" class="btn bg-deep-purple waves-effect">
+                        <button type="button" class="btn bg-deep-purple waves-effect btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class="material-icons">settings</i>
                             <span>SETTINGS</span>
                         </button>
@@ -141,7 +141,12 @@ if (isset($url['c'])) {
                 </div>
             </div>
         </div>
-        <script src="../dievai/js/menuclick.js"></script>
+
+    <div class='modal-insert-place'></div>
+
+    <script src="../dievai/js/class.insertblock.js"></script>
+    <script src="../dievai/js/menuclick.js"></script>
+
     <?php }  
     if ($url['c'] == 'list') {
         $settings = [ 
