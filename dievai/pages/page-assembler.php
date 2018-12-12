@@ -144,8 +144,8 @@ if (isset($url['c'])) {
 
     <div class='modal-insert-place'></div>
     
-    <script src="../dievai/js/menuclick.js"></script>
-    <script src="../dievai/js/class.insertblock.js"></script>
+    <script src="../dievai/js/menuclick.js" async></script>
+    <script src="../dievai/js/class.insertblock.js" async></script>
 
     <?php }  
     if ($url['c'] == 'list') {
