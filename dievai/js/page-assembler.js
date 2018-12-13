@@ -202,3 +202,15 @@ function addClassBox(elem) {
         console.log(targetElement.parentNode);
         //addClassBox(targetElement.parentNode);
     });
+
+    function CssFileItraukimas(){
+        var link = document.createElement( "link" );
+        src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
+        link.href = src;
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        link.media = "screen,print";
+
+        document.getElementsByTagName( "head" )[0].appendChild( link );
+    }
+
