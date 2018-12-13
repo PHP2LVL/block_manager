@@ -14,144 +14,186 @@ if(BUTTONS_BLOCK) {
 
 if (isset($url['c'])) {
     if ($url['c'] == 'main') {
-        $settings = [ 
-            "Form" => [
+        $extensionPrefix = "../extensions";
+        $blockList = $extensionPrefix . '/page_assembler/block_list.json';
+        $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->text->col_2_text_1_img;
+        $blockJSON = file_get_contents($blockPath,true);
+        $json = json_decode($blockJSON, true);
+        
+        if (empty($_POST)){
+            $content = $json['content'];
+        }
+        
+
+        $backEndHtmlFile = $extensionPrefix . $json['configurations']['backEndHtmlFile'];
+        if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveBlockInfo'] ) ) {
+
+            $content = $json['content'];
+            $i=0;
+            array_pop($_POST);
+            foreach ($_POST as $row) {
+                $content[$i]['value'] = $row;
+                $i++;
+            }
+            include $backEndHtmlFile;
+
+
+        }
+        if (empty($_POST)){
+        $settings = array();
+        $settings["Form"] = [ 
+             
                 "action" 	=> "", 
                 "method" 	=> "post", 
                 "enctype" 	=> "", 
                 "id" 		=> "", 
                 "class" 	=> "", 
-                "name" 		=> "reg"
-            ]
+                "name" 		=> ""
+            
         ];
         
+        
+			
+        $settings[""] = [
+				"type" 		=> "submit", 
+				"name" 		=> "saveBlockInfo", 
+				"value" 	=> $lang['admin']['save'], 
+				'form_line'	=> 'form-not-line',
+        ];
+        
+       
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
-        ?>
-        <div id="page-builder-zone">
-            <div class="row holder"  id='2'> <!-- PARENT BLOCK--> 
-                <div class="col-lg-12 crop" onclick="addClassBox(this)" id='666'>
-                    <img src="https://motionarray-portfolio.imgix.net/preview-83721-73b2ffab8d22cad99c5c66f9b51b4993-high.jpg" class="img-fluid max-width"  alt="Snow">
-                    <H1 class="top-left">Welcome to Page Assembler</h1>
-                    <span class="left-centered">Mauris dui enim, commodo at hendrerit a, pulvinar ut felis. Aliquam eu est ut nisi tincidunt facilisis. Phasellus porttitor vehicula eros, eget fermentum ex consequat vel. Nam fermentum, tortor quis congue maximus, magna dui mollis enim, vel efficitur ligula magna in urna. In interdum ipsum sit amet commodo lobortis. Aliquam erat volutpat. Morbi vitae nisi quis urna semper bibendum. Aenean hendrerit vel mi sit amet fringilla. Nunc convallis dui sed ultrices rhoncus. Vestibulum ac pulvinar erat. Proin dignissim ultricies metus eu luctus. Vivamus in bibendum quam. Aenean non fermentum nisi, a ultrices nisl. Sed sit amet tincidunt est. Nulla sit amet nibh turpis. Curabitur a finibus enim, a volutpat justo.</span>
-                    <button type="submit" class ="bottom-right">BUTTON</button>
-                </div>
-            </div>
-            <div class="row d-flex holder" id='1'> <!-- PARENT BLOCK-->
-                <div class="col-lg-8 crop"  onclick="addClassBox(this)" id='556'>
-                    <div class="row d-flex" id = '222'> 
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 pt-4"  onclick="addClassBox(this)" id='546'>
-                    <img src="https://motionarray-portfolio.imgix.net/preview-83721-73b2ffab8d22cad99c5c66f9b51b4993-high.jpg" class="max-plotis"  alt="Snow">                  
-                </div>
-            </div>
-
-            <div class="row d-flex holder" id='3'>
-                <div class="col-lg-8 crop"  onclick="addClassBox(this)" id='557' >
-                    <div class="row d-flex" draggable="true" id = '223'>  <!-- PARENT BLOCK-->
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-justify pt-4" onclick="addClassBox(this)" id='558' >
-                    <span id = '242'> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="dropdown col-lg-12">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Add New Block
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu main-dropdown">
-                    <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">Text Blocks<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/text_blocks/title-block.html">Title Block </a></li>
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/text_blocks/heading-block.html">Heading Block</a></li>
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/text_blocks/paragraph-block.html">Paragraph Block</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">Image Blocks<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" class="add-block test"  data-href="config/blocks/image_blocks/image-block.html">Image Block</a></li>
-                            <li><a tabindex="-1" class="add-block test"  data-href="config/blocks/image_blocks/image-description-block.html">Image with Description Block</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">Button Blocks<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/button_blocks/default-button-block.html">Default Button Block</a></li>
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/button_blocks/danger-button-block.html">Danger Button Block</a></li>
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/button_blocks/button-group-block.html">Button Group Block</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">Gallery Blocks<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/gallery_blocks/simple-gallery-block.html">Simple Gallery Block</a></li>
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/gallery_blocks/carousel-gallery-block.html">Carousel Gallery Block</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">List Blocks<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/list_blocks/simple-list-block.html">Simple List Block</a></li>
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/list_blocks/menu-list-block.html">Menu List Block</a></li>
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/list_blocks/table-block.html">Table Block</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">Form Blocks<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/form_blocks/registration-form-block.html">Registration Form Block</a></li>
-                            <li><a tabindex="-1" class="add-block test" data-href="config/blocks/form_blocks/feedback-form-block.html">Feedback Form Block</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            
-            <!-- 
-            ZONA BLOKŲ DĖLIOJIMUI 
-            IR PUSLAPIO KONSTRAVIMUI
-            -->
-         
-            <?php 
-        $path = '..\extensions\page_assembler\elements\text\2-1-text.json';
-        $content = json_decode(file_get_contents($path));
-        $data =  $content->data;
-        var_dump($data);
+    }
         ?>
         </div>
         <script src="js/blocks.js"></script>
         <script src="../dievai/js/manuimage.js"></script>
-
-       
-        <div class="col-lg-12">
-            <input type="hidden" name='indexID' id ="indexID" value="1">
-            <input type="hidden" name='parentIdInde' id ="parentIdInde" value="1">
-            <button type ="submit" name="submit" onclick="saugoti()">Saugoti</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Launch demo modal </button>
-        </div>
+    <?php }
+    
+    if ($url['c'] == 'edit'){
+        if (isset($_SESSION['page-assembler-pageId']) && !isset( $_GET['pageId'] )){
+            $pageId = $_SESSION['page-assembler-pageId'];
+        } else if (isset( $_GET['pageId'] )) {
+            $pageId = $_GET['pageId'];
+            $_SESSION['page-assembler-pageId'] = $_GET['pageId'];
+        }
+        if (isset($pageId) && pageAssemblerDBexist('pa_data')){
+            $settings = [ 
+                "Form" => [
+                    "action" 	=> "", 
+                    "method" 	=> "post", 
+                    "enctype" 	=> "", 
+                    "id" 		=> "", 
+                    "class" 	=> "", 
+                    "name" 		=> "reg"
+                ]
+            ];
         
+            if (isset( $_GET['insertBlock'] ) ) {
+                $blockName = $_GET['insertBlock'];
+                $blockType = $_GET['blockType'];
+                $extensionPrefix = "../extensions";
+                $blockList = $extensionPrefix . '/page_assembler/block_list.json';
+                $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->$blockType->$blockName; //col_2_text_1_img;
+                $blockJSON = file_get_contents($blockPath,true);
+                $json = json_decode($blockJSON, true);
+                $content = $json['content'];
+
+                foreach ($content as $key => $element) {
+                    //echo "<pre>"; print_r($element); echo "</pre>";
+                    if ($element['type'] == 'span'){
+                        $settings[$element['name']] = [
+                            'type'      =>      'string',
+                            'value'     =>      editor('spaw', 'standartinis', $element['name'], $element['value']),
+                            'name'      =>      $element['name'],
+                            
+                        ];
+                    } else {
+                        $settings[$element['name']] = [
+                            'type'      =>      $element['type'],
+                            'value'     =>      $element['value'],
+                            'name'      =>      $element['name']
+                            
+                        ];
+                    }
+                }
+            }
+
+            if (isset( $_POST['addblock'] ) ) {
+                
+                $content = $json['content'];
+                $i=0;
+                array_pop($_POST);
+                foreach ($_POST as $row) {
+                    $content[$i]['value'] = $row;
+                    $i++;
+                }
+                $contentToDb = json_encode($content);
+                //var_dump($contentToDb);
+                //echo "<pre>"; print_r($content); echo "</pre>";
+                $sql = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_data` (page_id,type,lang, content) VALUES (" . escape($pageId) . ", " . escape($blockPath) . ", " . escape( lang() ) . ", " .escape( $contentToDb ) . ")";
+                mysql_query1($sql);
+                unset($sql);
+                
+            }
+
+            
+
+                $sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "pa_data` WHERE page_id = " . escape($pageId) . " ORDER BY ID ASC";
+                $pageContent = mysql_query1($sql);
+                unset($sql);
+                if (!$pageContent){
+                    $_SESSION['page-assembler-pageId'] = null;
+                    redirect(
+                        url("?id," . $url['id'] . ";c," . $url['c']),
+                        "header",
+                        [
+                            'type'		=> 'success',
+                            'message' 	=> $lang['admin']['pa-noPage']
+                        ]
+                    );
+                } else {
+                    $extensionPrefix = "../extensions";
+                    foreach ($pageContent as $block => $value) {
+                        
+                        $blockPath = $pageContent[$block]['type'];                    
+                        $blockJSON =  $pageContent[$block]['content'];
+                        //$json = json_decode($blockJSON, true);                    
+                        $content = json_decode($blockJSON, true);
+                    // echo $pageContent[$block]['id'] . "<br>";
+                        //echo "<pre>"; print_r($content); echo "</pre>";
+                        $localBlockConfig = json_decode( file_get_contents($blockPath,true) , true);
+                        $content['orderID'] = $pageContent[$block]['order_id'];
+                        $content['parentId'] = $pageContent[$block]['parent_id'];
+                        $backEndHtmlFile = $extensionPrefix . $localBlockConfig['configurations']['backEndHtmlFile'];
+                        include $backEndHtmlFile;
+                        
+                    } 
+                    
+                    $blockList = $extensionPrefix . '/page_assembler/block_list.json';
+                    $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->text->col_2_text_1_img;
+                    
+                }
+            }
+        
+        $settings[""] = [
+            "type" 		=> "submit", 
+            "name" 		=> "addblock", 
+            "value" 	=> $lang['admin']['save'], 
+            'form_line'	=> 'form-not-line',
+        ];
+    
+   
+        $formClass = new Form($settings);
+        lentele($lang['admin']['pageassembler_add'], $formClass->form());
+
+        ?>
         <script type="text/javascript" src="js/page-assembler.js"></script>
-    <?php }  
+        <?php
+    }
+
+
     if ($url['c'] == 'list') {
         $settings = [ 
             "Form" => [

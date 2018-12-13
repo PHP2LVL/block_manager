@@ -13,6 +13,8 @@ $lang['admin']['configuration_seo'] = 'SEO nustatymai';
 $lang['admin']['pageassembler_add'] = 'Naujas puslapis';
 $lang['admin']['pageassembler_settings'] = 'Nustatymai';
 $lang['admin']['pageassembler_list'] = 'Puslapių sąrašas';
+$lang['admin']['pa-noPage'] = 'Duomenų bazėje tokio puslapio nėra';
+
 $lang['admin']['configuration_maintenance'] = 'Remonto nustatymai';
 $lang['setup']['lang'] = 'Kalba';
 $lang['setup']['url'] = 'Tinklapio url adresas';
