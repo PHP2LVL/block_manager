@@ -1,6 +1,6 @@
 <?php
 
-include_once '/../functions/functions.pageassembler.php';
+include_once 'functions/functions.pageassembler.php';
 echo '<link rel="stylesheet" href="css/page-builder.css">';
 
 
@@ -101,7 +101,18 @@ if (isset($url['c'])) {
                         <?php echo '</li>' ?>
                     <?php endforeach; ?>
                 </ul>
-            
+                <script>
+        function CssFileItraukimas(){
+        var link = document.createElement( "link" );
+        src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
+        link.href = src;
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        link.media = "screen,print";
+
+        document.getElementsByTagName( "head" )[0].appendChild( link );
+        }
+    </script>
             <!-- 
             ZONA BLOKŲ DĖLIOJIMUI 
             IR PUSLAPIO KONSTRAVIMUI
