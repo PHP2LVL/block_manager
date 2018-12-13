@@ -1,6 +1,6 @@
 <?php
 
-include_once '/../functions/functions.pageassembler.php';
+include_once 'functions/functions.pageassembler.php';
 echo '<link rel="stylesheet" href="css/page-builder.css">';
 
 
@@ -51,9 +51,7 @@ if (isset($url['c'])) {
                 "name" 		=> ""
             
         ];
-        
-        
-			
+
         $settings[""] = [
 				"type" 		=> "submit", 
 				"name" 		=> "saveBlockInfo", 
@@ -64,12 +62,11 @@ if (isset($url['c'])) {
        
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
+        ?>         
+    <script src="js/blocks.js"></script>
+    <script src="../dievai/js/manuimage.js"></script>
+    <?php } 
     }
-        ?>
-        </div>
-        <script src="js/blocks.js"></script>
-        <script src="../dievai/js/manuimage.js"></script>
-    <?php }
     
     if ($url['c'] == 'edit'){
         if (isset($_SESSION['page-assembler-pageId']) && !isset( $_GET['pageId'] )){
@@ -155,6 +152,7 @@ if (isset($url['c'])) {
                     );
                 } else {
                     $extensionPrefix = "../extensions";
+                    echo '<div id="page-builder-zone">';
                     foreach ($pageContent as $block => $value) {
                         
                         $blockPath = $pageContent[$block]['type'];                    
@@ -175,7 +173,7 @@ if (isset($url['c'])) {
                     $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->text->col_2_text_1_img;
                     
                 }
-            }
+        }
         
         $settings[""] = [
             "type" 		=> "submit", 
@@ -189,11 +187,43 @@ if (isset($url['c'])) {
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
 
         ?>
+        <div class="row">
+            <div class="dropdown col-lg-12">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Add New Block
+                <span class="caret"></span></button>
+                <?php $categoriesDir = 'config/blocks/'; ?>
+                <?php $categories = array_diff(scandir($categoriesDir), array('..', '.')); ?>
+                <ul class="dropdown-menu main-dropdown">
+                    <?php foreach ($categories as $category): ?>
+                        <?php echo '<li class="dropdown-submenu">'?>
+                            <?php echo '<a class="test" tabindex="-1" href="#">'.$category.'<span class="caret"></span></a>'?>
+                            <?php echo '<ul class="dropdown-menu">' ?>
+                                <?php $blocksDir = 'config/blocks/'.$category; ?>
+                                <?php $blocks = array_diff(scandir($blocksDir), array('..', '.')); ?>
+                                <?php foreach ($blocks as $block): ?>
+                                <?php echo '<li><a tabindex="-1" class="add-block test" data-href="config/blocks/'.$category.'/'.$block.'">'.substr($block,0,-5).'</a></li>' ?>
+                                <?php endforeach; ?>
+                            <?php echo '</ul>'; ?>
+                        <?php echo '</li>' ?>
+                    <?php endforeach; ?>
+                </ul>
+            <script>
+                function CssFileItraukimas(){
+                    var link = document.createElement( "link" );
+                    src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
+                    link.href = src;
+                    link.type = "text/css";
+                    link.rel = "stylesheet";
+                    link.media = "screen,print";
+
+                    document.getElementsByTagName( "head" )[0].appendChild( link );
+                }
+            </script>       
+        </div>
         <script type="text/javascript" src="js/page-assembler.js"></script>
-        <?php
-    }
-
-
+            </div>
+        </div>
+    <?php }  
     if ($url['c'] == 'list') {
         $settings = [ 
             "Form" => [
@@ -229,6 +259,4 @@ if (isset($url['c'])) {
         echo $url['p'];
     }
 }
-
-
 ?>
