@@ -30,7 +30,7 @@ if (isset($url['c'])) {
         ];
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
-        ?>
+        
 
         
 
@@ -155,7 +155,7 @@ if (isset($url['c'])) {
         </div>
 
 
-       <?php
+<?php
 
     } 
     if ($url['c'] == 'list') {
@@ -309,13 +309,13 @@ if (isset($url['c'])) {
         ];
 
 
-    ?>
+?>
     <div class='modal-insert-place'></div>
     
     <script src="../dievai/js/menuclick.js" async></script>
     <script src="../dievai/js/class.insertblock.js" async></script>
 
-    <?php   
+<?php   
     if ($url['c'] == 'list') {
         $settings = [ 
             "Form" => [
@@ -347,3 +347,4 @@ if (isset($url['c'])) {
         
     }
 }
+?>
