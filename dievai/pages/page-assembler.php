@@ -1,6 +1,6 @@
 <?php
 
-include_once '/../functions/functions.pageassembler.php';
+include_once 'functions/functions.pageassembler.php';
 echo '<link rel="stylesheet" href="css/page-builder.css">';
 
 
@@ -14,73 +14,179 @@ if(BUTTONS_BLOCK) {
 
 if (isset($url['c'])) {
     if ($url['c'] == 'main') {
-        $settings = [ 
-            "Form" => [
+        $extensionPrefix = "../extensions";
+        $blockList = $extensionPrefix . '/page_assembler/block_list.json';
+        $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->text->col_2_text_1_img;
+        $blockJSON = file_get_contents($blockPath,true);
+        $json = json_decode($blockJSON, true);
+        
+        if (empty($_POST)){
+            $content = $json['content'];
+        }
+        
+
+        $backEndHtmlFile = $extensionPrefix . $json['configurations']['backEndHtmlFile'];
+        if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveBlockInfo'] ) ) {
+
+            $content = $json['content'];
+            $i=0;
+            array_pop($_POST);
+            foreach ($_POST as $row) {
+                $content[$i]['value'] = $row;
+                $i++;
+            }
+            include $backEndHtmlFile;
+
+
+        }
+        if (empty($_POST)){
+        $settings = array();
+        $settings["Form"] = [ 
+             
                 "action" 	=> "", 
                 "method" 	=> "post", 
                 "enctype" 	=> "", 
                 "id" 		=> "", 
                 "class" 	=> "", 
-                "name" 		=> "reg"
-            ]
+                "name" 		=> ""
+            
+        ];
+
+        $settings[""] = [
+				"type" 		=> "submit", 
+				"name" 		=> "saveBlockInfo", 
+				"value" 	=> $lang['admin']['save'], 
+				'form_line'	=> 'form-not-line',
         ];
         
+       
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
-        ?>
-            <div id="page-builder-zone">
-                <!-- 
-                    ZONA BLOKŲ DĖLIOJIMUI 
-                    IR PUSLAPIO KONSTRAVIMUI
-                -->
-                <!-- <div class="manu-image-area">img</div> -->
-                <div class="row">
-                    <div class="col-lg-12 crop">
-                        <img src="https://motionarray-portfolio.imgix.net/preview-83721-73b2ffab8d22cad99c5c66f9b51b4993-high.jpg" class="img-fluid max-width"  alt="Snow">
-                        <H1 class="top-left">Welcome to Page Assembler</h1>
-                        <p class="left-centered">Mauris dui enim, commodo at hendrerit a, pulvinar ut felis. Aliquam eu est ut nisi tincidunt facilisis. Phasellus porttitor vehicula eros, eget fermentum ex consequat vel. Nam fermentum, tortor quis congue maximus, magna dui mollis enim, vel efficitur ligula magna in urna. In interdum ipsum sit amet commodo lobortis. Aliquam erat volutpat. Morbi vitae nisi quis urna semper bibendum. Aenean hendrerit vel mi sit amet fringilla. Nunc convallis dui sed ultrices rhoncus. Vestibulum ac pulvinar erat. Proin dignissim ultricies metus eu luctus. Vivamus in bibendum quam. Aenean non fermentum nisi, a ultrices nisl. Sed sit amet tincidunt est. Nulla sit amet nibh turpis. Curabitur a finibus enim, a volutpat justo.</p>
-                        <button type="submit" class ="bottom-right">BUTTON</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row d-flex holder" id='1'> <!-- PARENT BLOCK-->
-                <div class="col-lg-8 crop"  onclick="addClassBox(this)" id='556'>
-                    <div class="row d-flex" id = '222'> 
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 pt-4"  onclick="addClassBox(this)" id='546'>
-                    <img src="https://motionarray-portfolio.imgix.net/preview-83721-73b2ffab8d22cad99c5c66f9b51b4993-high.jpg" class="max-plotis"  alt="Snow">                  
-                </div>
-            </div>
+        ?>         
+    <script src="js/blocks.js"></script>
+    <script src="../dievai/js/manuimage.js"></script>
+    <?php } 
+    }
+    
+    if ($url['c'] == 'edit'){
+        if (isset($_SESSION['page-assembler-pageId']) && !isset( $_GET['pageId'] )){
+            $pageId = $_SESSION['page-assembler-pageId'];
+        } else if (isset( $_GET['pageId'] )) {
+            $pageId = $_GET['pageId'];
+            $_SESSION['page-assembler-pageId'] = $_GET['pageId'];
+        }
+        if (isset($pageId) && pageAssemblerDBexist('pa_data')){
+            $settings = [ 
+                "Form" => [
+                    "action" 	=> "", 
+                    "method" 	=> "post", 
+                    "enctype" 	=> "", 
+                    "id" 		=> "", 
+                    "class" 	=> "", 
+                    "name" 		=> "reg"
+                ]
+            ];
+        
+            if (isset( $_GET['insertBlock'] ) ) {
+                $blockName = $_GET['insertBlock'];
+                $blockType = $_GET['blockType'];
+                $extensionPrefix = "../extensions";
+                $blockList = $extensionPrefix . '/page_assembler/block_list.json';
+                $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->$blockType->$blockName; //col_2_text_1_img;
+                $blockJSON = file_get_contents($blockPath,true);
+                $json = json_decode($blockJSON, true);
+                $content = $json['content'];
 
-            <div class="row d-flex holder" id='3'>
-                <div class="col-lg-8 crop"  onclick="addClassBox(this)" id='557' >
-                    <div class="row d-flex" draggable="true" id = '223'>  <!-- PARENT BLOCK-->
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                        <div class="col-lg-4 text-justify pt-4">
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-justify pt-4" onclick="addClassBox(this)" id='558' >
-                    <span id = '242'> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula.</span>
-                </div>
-            </div>
-        </div>
+                foreach ($content as $key => $element) {
+                    //echo "<pre>"; print_r($element); echo "</pre>";
+                    if ($element['type'] == 'span'){
+                        $settings[$element['name']] = [
+                            'type'      =>      'string',
+                            'value'     =>      editor('spaw', 'standartinis', $element['name'], $element['value']),
+                            'name'      =>      $element['name'],
+                            
+                        ];
+                    } else {
+                        $settings[$element['name']] = [
+                            'type'      =>      $element['type'],
+                            'value'     =>      $element['value'],
+                            'name'      =>      $element['name']
+                            
+                        ];
+                    }
+                }
+            }
+
+            if (isset( $_POST['addblock'] ) ) {
+                
+                $content = $json['content'];
+                $i=0;
+                array_pop($_POST);
+                foreach ($_POST as $row) {
+                    $content[$i]['value'] = $row;
+                    $i++;
+                }
+                $contentToDb = json_encode($content);
+                //var_dump($contentToDb);
+                //echo "<pre>"; print_r($content); echo "</pre>";
+                $sql = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_data` (page_id,type,lang, content) VALUES (" . escape($pageId) . ", " . escape($blockPath) . ", " . escape( lang() ) . ", " .escape( $contentToDb ) . ")";
+                mysql_query1($sql);
+                unset($sql);
+                
+            }
+
+            
+
+                $sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "pa_data` WHERE page_id = " . escape($pageId) . " ORDER BY ID ASC";
+                $pageContent = mysql_query1($sql);
+                unset($sql);
+                if (!$pageContent){
+                    $_SESSION['page-assembler-pageId'] = null;
+                    redirect(
+                        url("?id," . $url['id'] . ";c," . $url['c']),
+                        "header",
+                        [
+                            'type'		=> 'success',
+                            'message' 	=> $lang['admin']['pa-noPage']
+                        ]
+                    );
+                } else {
+                    $extensionPrefix = "../extensions";
+                    echo '<div id="page-builder-zone">';
+                    foreach ($pageContent as $block => $value) {
+                        
+                        $blockPath = $pageContent[$block]['type'];                    
+                        $blockJSON =  $pageContent[$block]['content'];
+                        //$json = json_decode($blockJSON, true);                    
+                        $content = json_decode($blockJSON, true);
+                    // echo $pageContent[$block]['id'] . "<br>";
+                        //echo "<pre>"; print_r($content); echo "</pre>";
+                        $localBlockConfig = json_decode( file_get_contents($blockPath,true) , true);
+                        $content['orderID'] = $pageContent[$block]['order_id'];
+                        $content['parentId'] = $pageContent[$block]['parent_id'];
+                        $backEndHtmlFile = $extensionPrefix . $localBlockConfig['configurations']['backEndHtmlFile'];
+                        include $backEndHtmlFile;
+                        
+                    } 
+                    
+                    $blockList = $extensionPrefix . '/page_assembler/block_list.json';
+                    $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->text->col_2_text_1_img;
+                    
+                }
+        }
+        
+        $settings[""] = [
+            "type" 		=> "submit", 
+            "name" 		=> "addblock", 
+            "value" 	=> $lang['admin']['save'], 
+            'form_line'	=> 'form-not-line',
+        ];
+    
+   
+        $formClass = new Form($settings);
+        lentele($lang['admin']['pageassembler_add'], $formClass->form());
+
+        ?>
         <div class="row">
             <div class="dropdown col-lg-12">
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Add New Block
@@ -101,30 +207,19 @@ if (isset($url['c'])) {
                         <?php echo '</li>' ?>
                     <?php endforeach; ?>
                 </ul>
-            
-            <!-- 
-            ZONA BLOKŲ DĖLIOJIMUI 
-            IR PUSLAPIO KONSTRAVIMUI
-            -->
-         
-            <?php 
-        $path = '..\extensions\page_assembler\elements\text\2-1-text.json';
-        $content = json_decode(file_get_contents($path));
-        $data =  $content->data;
-        var_dump($data);
-        ?>
-        </div>
-        <script src="js/blocks.js"></script>
-        <script src="../dievai/js/manuimage.js"></script>
+            <script>
+                function CssFileItraukimas(){
+                    var link = document.createElement( "link" );
+                    src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
+                    link.href = src;
+                    link.type = "text/css";
+                    link.rel = "stylesheet";
+                    link.media = "screen,print";
 
-       
-        <div class="col-lg-12">
-            <input type="hidden" name='indexID' id ="indexID" value="1">
-            <input type="hidden" name='parentIdInde' id ="parentIdInde" value="1">
-            <button type ="submit" name="submit" onclick="saugoti()">Saugoti</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Launch demo modal </button>
+                    document.getElementsByTagName( "head" )[0].appendChild( link );
+                }
+            </script>       
         </div>
-        
         <script type="text/javascript" src="js/page-assembler.js"></script>
             </div>
         </div>
@@ -145,25 +240,81 @@ if (isset($url['c'])) {
         lentele($lang['admin']['pageassembler_list'], $formClass->form());
     }
     if ($url['c'] == 'settings') {
-        $settings = [ 
+        
+
+        if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
+            $title =  escape($_POST['Pavadinimas']);
+            $metaTitle = escape($_POST['metaPavadinimas']);
+            $metaDescription =  escape($_POST['metaAprasymas']);
+            $metaKeywords = escape($_POST['metaKeywords']);
+            $friendlyUrl = escape($_POST['F_urls']);
+
+            $insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
+            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
+            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")";
+            
+            redirect(
+                url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
+                "header",
+                [
+                    'type'      => 'success',
+                    'message'   => $lang['admin']['configuration_updated']
+                ]
+            );
+            
+        }
+        $settings = [
+            //$conf = [];
             "Form" => [
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> "reg"
+                "action"    => "", 
+                "method"    => "post", 
+                "name"      => "reg"
+            ],
+            $lang['admin']['title']  => [
+                "type"  => "text", 
+                "value" => input($result['title'] ), 
+                "name"  => "Pavadinimas"
+            ],
+            $lang['admin']['metaTitle']  => [
+                "type"  => "text", 
+                "value" => input($result['meta_title'] ), 
+                "name"  => "metaPavadinimas"
+            ],
+            $lang['admin']['metaDescription']  => [
+                "type"  => "text", 
+                "value" => input($result['meta_desc'] ), 
+                "name"  => "metaAprasymas"
+            ],
+            $lang['admin']['metaKeywords']  => [
+                "type"  => "text", 
+                "value" => input($result['meta_keywords'] ), 
+                "name"  => "metaKeywords"
+            ],
+            
+            "Friendly url:"             => [
+                "type"      => "select", 
+                "value"     =>  [
+                    '/'=> '/', 
+                    ';'=> ';', 
+                    '0'=> $lang['admin']['off']
+                ], 
+                "selected"  => $result['friendly_url'], 
+                "name"      => "F_urls"
+            ],
+            ""                                     => [
+                "type"      => "submit", 
+                "name"      => "Konfiguracija", 
+                "value"     => $lang['admin']['save'], 
+                'form_line' => 'form-not-line',
             ]
         ];
         $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_settings'], $formClass->form());  
-    }
+        lentele($lang['admin']['pageassembler_settings'], $formClass->form());
+}
     //Section for editing page settings
     if ($url['c'] == 'settings' && isset($url['p'])){
         var_dump($_GET);
         echo $url['p'];
     }
 }
-
-
 ?>
