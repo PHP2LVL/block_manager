@@ -235,6 +235,7 @@ if (isset($url['c'])) {
                 "name" 		=> "reg"
             ]
         ];
+        echo '<a href="/block_manager/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
         pageAssemblerDBexist('pa_page_settings');
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_list'], $formClass->form());
