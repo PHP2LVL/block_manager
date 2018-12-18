@@ -249,9 +249,9 @@ if (isset($url['c'])) {
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['F_urls']);
 
-            $insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
+            $insertQuery =  mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
             (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
-            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")";
+            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")");
             
             redirect(
                 url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
