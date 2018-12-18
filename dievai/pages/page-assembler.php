@@ -240,19 +240,77 @@ if (isset($url['c'])) {
         lentele($lang['admin']['pageassembler_list'], $formClass->form());
     }
     if ($url['c'] == 'settings') {
-        $settings = [ 
+        
+
+        if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
+            $title =  escape($_POST['Pavadinimas']);
+            $metaTitle = escape($_POST['metaPavadinimas']);
+            $metaDescription =  escape($_POST['metaAprasymas']);
+            $metaKeywords = escape($_POST['metaKeywords']);
+            $friendlyUrl = escape($_POST['F_urls']);
+
+            $insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
+            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
+            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")";
+            
+            redirect(
+                url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
+                "header",
+                [
+                    'type'      => 'success',
+                    'message'   => $lang['admin']['configuration_updated']
+                ]
+            );
+            
+        }
+        $settings = [
+            //$conf = [];
             "Form" => [
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> "reg"
+                "action"    => "", 
+                "method"    => "post", 
+                "name"      => "reg"
+            ],
+            $lang['admin']['title']  => [
+                "type"  => "text", 
+                "value" => input($result['title'] ), 
+                "name"  => "Pavadinimas"
+            ],
+            $lang['admin']['metaTitle']  => [
+                "type"  => "text", 
+                "value" => input($result['meta_title'] ), 
+                "name"  => "metaPavadinimas"
+            ],
+            $lang['admin']['metaDescription']  => [
+                "type"  => "text", 
+                "value" => input($result['meta_desc'] ), 
+                "name"  => "metaAprasymas"
+            ],
+            $lang['admin']['metaKeywords']  => [
+                "type"  => "text", 
+                "value" => input($result['meta_keywords'] ), 
+                "name"  => "metaKeywords"
+            ],
+            
+            "Friendly url:"             => [
+                "type"      => "select", 
+                "value"     =>  [
+                    '/'=> '/', 
+                    ';'=> ';', 
+                    '0'=> $lang['admin']['off']
+                ], 
+                "selected"  => $result['friendly_url'], 
+                "name"      => "F_urls"
+            ],
+            ""                                     => [
+                "type"      => "submit", 
+                "name"      => "Konfiguracija", 
+                "value"     => $lang['admin']['save'], 
+                'form_line' => 'form-not-line',
             ]
         ];
         $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_settings'], $formClass->form());  
-    }
+        lentele($lang['admin']['pageassembler_settings'], $formClass->form());
+}
     //Section for editing page settings
     if ($url['c'] == 'settings' && isset($url['p'])){
         var_dump($_GET);
