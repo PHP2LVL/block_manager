@@ -22,6 +22,7 @@ $lang['admin']['title'] = 'Title';
 $lang['admin']['metaTitle'] = 'Meta pavadinimas';
 $lang['admin']['metaDescription'] = 'Meta aprašymas';
 $lang['admin']['metaKeywords'] = 'Meta raktazodziai';
+
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
 $lang['admin']['poll_active_q'] = 'Aktyvumas';

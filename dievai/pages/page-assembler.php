@@ -12,35 +12,18 @@ if(BUTTONS_BLOCK) {
 	lentele($lang['admin']['pageassembler'], buttonsMenu(buttons('pageassembler')));
 }
 
+if (pageAssemblerDBexist("pa_page_settings")){
+   //return error notifyMsg           
+}
+
 if (isset($url['c'])) {
     if ($url['c'] == 'main') {
 
-        if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
-            $title =  escape($_POST['Pavadinimas']);
-            $metaTitle = escape($_POST['metaPavadinimas']);
-            $metaDescription =  escape($_POST['metaAprasymas']);
-            $metaKeywords = escape($_POST['metaKeywords']);
-            $friendlyUrl = escape($_POST['F_urls']);
-            $request = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
-            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
-            VALUES ($title,$metaTitle,$metaDescription,$metaKeywords,$friendlyUrl)";
-            if (pageAssemblerDBexist("pa_page_settings")){
-                echo mysql_query1($request);    
-            }
-            
-            /*
-            delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
-            */
-            redirect(
-                url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
-                "header",
-                [
-                    'type'      => 'success',
-                    'message'   => $lang['admin']['configuration_updated']
-                ]
-            );
-            ?>
-             <div id="page-builder-zone">
+?>
+
+
+         <div id="page-builder-zone">
+
 
         <!-- 
             ZONA BLOKŲ DĖLIOJIMUI 
@@ -83,35 +66,139 @@ if (isset($url['c'])) {
                 </div>
             </div>
         </div>
-       <?php }
-        //
+
+       <?php
+
+    } 
+    if ($url['c'] == 'list') {
+        //pages view
+
+        //$sqlPages = mysql_query1( "SELECT * from `" . LENTELES_PRIESAGA ."page` WHERE `show`= 'Y' AND `lang` = " . escape( lang() ) . " order by place" );
+        $sqlPages = mysql_query1( "SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'Y' AND `lang` = " . escape( lang() ) . " order by id" );
+        var_dump($sqlPages);
+
+
+
+
+
+        //$li         = ! empty($data) ? build_menu_admin($data) : '';
+        //$pageMenu   = '<div class="dd nestable-with-handle">' . $li . '</div>';
+        //if (!empty($sqlPages)) {
+            //foreach ($sqlPages as $page) {
+                //$page .= '<li class="dd-handle">'
+
+            //}
+        //}
+        
+        //var_dump($row);
+        //foreach ($sqlPages as $puslapiai) {
+            //echo $puslapiai['pavadinimas'] . "<br/>";
+            //echo "<a>" .$puslapiai['pavadinimas']  ."</a>" . "<br/>";
+        //}
+        //echo "<a href = 'puslapiai/naujienos.php'>"  .$sqlPages[0]['pavadinimas']  ."</a>" ."<br/>";
+        //echo "<a href = 'puslapiai/apie.php'>"  .$sqlPages[1]['pavadinimas']  ."</a>" ."" "<br/>";
+        //echo "<a href = 'puslapiai/paieska.php'>"  .$sqlPages[2]['pavadinimas']  ."</a>" ."<br/>";
+        //echo "<a href = 'puslapiai/kontaktai.php'>"  .$sqlPages[3]['pavadinimas']  ."</a>" ."<br/>";
+
+        /*
+        foreach ($sqlPages as $row) {
+            $data[$row['parent']][] = $row;
+        }
+        $li         = ! empty($data) ? build_menu_admin($data) : '';
+        $pageMenu   = '<div class="dd nestable-with-handle">' . $li . '</div>';
+        $sqlOtherPages = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' AND `lang` = " . escape( lang() ) . " order by id" );
+        $otherPages = '<ol class="dd-list">';
+        if (! empty($sqlOtherPages)) {
+            foreach ($sqlOtherPages as $otherPage) {
+                $otherPages .= '<li class="dd-handle">
+                <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $otherPage['id'] ) . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')">
+                <img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" />
+                </a>
+                <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $otherPage['id'] ) . '" >
+                <img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" />
+                </a>
+                <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $otherPage['id'] ) . '">
+                <img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '"/>
+                </a>
+                ' . $otherPage['pavadinimas'] . '
+                </li>';
+            }   
+        }
+        $otherPages .= '</ol>';
+        */
         $settings = [
+            
+            "Form" => [
+                "action" 	=> "", 
+                "method" 	=> "post", 
+                "enctype" 	=> "", 
+                "id" 		=> "", 
+                "class" 	=> "", 
+                "name" 		=> "reg"
+            ]
+        ];
+            
+        $formClass = new Form($settings);
+        lentele($lang['admin']['pageassembler_list'], $formClass->form());
+
+    }
+    if ($url['c'] == 'settings') {
+        
+
+        if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
+            $title =  escape($_POST['Pavadinimas']);
+            $metaTitle = escape($_POST['metaPavadinimas']);
+            $metaDescription =  escape($_POST['metaAprasymas']);
+            $metaKeywords = escape($_POST['metaKeywords']);
+            $friendlyUrl = escape($_POST['F_urls']);
+
+            $insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
+            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
+            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")";
+
+            var_dump( mysql_query1($insertQuery));
+            /*
+            redirect(
+                url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
+                "header",
+                [
+                    'type'      => 'success',
+                    'message'   => $lang['admin']['configuration_updated']
+                ]
+            );
+            */
+        }
+
+//select data from database
+        $selectQuery = "SELECT * FROM " . LENTELES_PRIESAGA . "pa_page_settings WHERE ID='25'";
+        //var_dump($selectQuery);
+        $result = mysql_query1($selectQuery);
+        var_dump($result);
+        $settings = [
+            //$conf = [];
             "Form" => [
                 "action"    => "", 
                 "method"    => "post", 
-                "enctype"   => "", 
-                "id"        => "", 
-                "class"     => "", 
                 "name"      => "reg"
             ],
             $lang['admin']['title']  => [
                 "type"  => "text", 
-                "value" => input( $pageConfig['Pavadinimas'] ), 
+                "value" => input($result['title'] ), 
                 "name"  => "Pavadinimas"
             ],
             $lang['admin']['metaTitle']  => [
                 "type"  => "text", 
-                "value" => input( $pageConfig['metaTitle'] ), 
+                "value" => input($result['meta_title'] ), 
                 "name"  => "metaPavadinimas"
             ],
             $lang['admin']['metaDescription']  => [
                 "type"  => "text", 
-                "value" => input($pageConfig['metaDescription'] ), 
+                "value" => input($result['meta_desc'] ), 
                 "name"  => "metaAprasymas"
             ],
             $lang['admin']['metaKeywords']  => [
                 "type"  => "text", 
-                "value" => input( $pageConfig['metaKeywords'] ), 
+                "value" => input($result['meta_keywords'] ), 
                 "name"  => "metaKeywords"
             ],
             
@@ -122,7 +209,7 @@ if (isset($url['c'])) {
                     ';'=> ';', 
                     '0'=> $lang['admin']['off']
                 ], 
-                "selected"  => $pageConfig['F_urls'], 
+                "selected"  => $result['friendly_url'], 
                 "name"      => "F_urls"
             ],
             ""                                     => [
@@ -132,37 +219,9 @@ if (isset($url['c'])) {
                 'form_line' => 'form-not-line',
             ]
         ];
-        $formClass = new Form($settings);
-        lentele($lang['admin']['configuration_seo'], $formClass->form());
 
-    } 
-    if ($url['c'] == 'list') {
-        $settings = [ 
-            "Form" => [
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> "reg"
-            ]
-            ];
-        $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_list'], $formClass->form());
-    }
-    if ($url['c'] == 'settings') {
-        $settings = [ 
-            "Form" => [
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> "reg"
-            ]
-            ];
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_settings'], $formClass->form());
+        
     }
 }
-?>
