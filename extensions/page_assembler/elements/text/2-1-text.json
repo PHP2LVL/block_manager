@@ -1,7 +1,0 @@
-{
-    "data":{
-        "a":1,
-        "b":2
-    },
-    "html":"<div class=\"row d-flex holder\" > <!-- PARENT BLOCK--><div class=\"col-lg-8\" ><div class=\"row d-flex pt-4\" ><div class=\"col-lg-4 text-justify\"><span>aaaaa<\/span><\/div><div class=\"col-lg-4 text-justify pt-4\" ><span >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim.Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim.Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec.<\/span><\/div><div class=\"col-lg-4 text-justify pt-4\" ><span >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim.Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim.Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec.<\/span><\/div><\/div><\/div><div class=\"col-lg-4 pt-4\"><img src=\"https:\/\/motionarray-portfolio.imgix.net\/preview-83721-73b2ffab8d22cad99c5c66f9b51b4993-high.jpg\" class=\"max-plotis\" alt=\"\" title = \"\"><\/div><\/div>"
-}

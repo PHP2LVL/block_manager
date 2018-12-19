@@ -8,9 +8,9 @@
                 },
             "version":"1.0",
             "bootstrap":"3.0",
-            "type": "text",
-            "title":"team block",
-            "backEndHtmlFile":"/page_assembler/text_blocks/team_block/team_block.php",
+            "type": "team",
+            "title":"team1",
+            "backEndHtmlFile":"/page_assembler/team_blocks/team_block/team1.php",
             "frontEndHtml":""
         },
     "content":
@@ -72,7 +72,7 @@
             "9":{
                 "type":"text",
                 "style":"",
-                "name":"First_image_src",
+                "name":"Second_image_src",
                 "value":"http://magento2.flytheme.net/themes/sm_market/pub/media/wysiwyg/team/team-2.jpg"
             },
             "10":{

@@ -1,4 +1,4 @@
-<div class="row" id='<?php echo $content['parentId'];?>' orderID='<?php echo $content['orderID'];?>' data-filename ='text_blocks' data-filename ='team_block' onclick="addClassBox(this)">
+<div class="row" id='<?php echo $content['parentId'];?>' orderID='<?php echo $content['orderID'];?>' data-filename ='text_blocks' data-filename ='team1' onclick="addClassBox(this)">
     <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="team-inner">
             <div class="team-image">

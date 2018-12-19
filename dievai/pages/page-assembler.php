@@ -63,7 +63,6 @@ if (isset($url['c'])) {
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
         ?>         
-    <script src="js/blocks.js"></script>
     <script src="../dievai/js/manuimage.js"></script>
     <?php } 
     }
@@ -159,7 +158,7 @@ if (isset($url['c'])) {
                         $blockJSON =  $pageContent[$block]['content'];
                         //$json = json_decode($blockJSON, true);                    
                         $content = json_decode($blockJSON, true);
-                    // echo $pageContent[$block]['id'] . "<br>";
+                        // echo $pageContent[$block]['id'] . "<br>";
                         //echo "<pre>"; print_r($content); echo "</pre>";
                         $localBlockConfig = json_decode( file_get_contents($blockPath,true) , true);
                         $content['orderID'] = $pageContent[$block]['order_id'];
@@ -170,7 +169,7 @@ if (isset($url['c'])) {
                     } 
                     
                     $blockList = $extensionPrefix . '/page_assembler/block_list.json';
-                    $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->text->col_2_text_1_img;
+                    $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->team->team1;
                     
                 }
         }
@@ -191,17 +190,16 @@ if (isset($url['c'])) {
             <div class="dropdown col-lg-12">
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Add New Block
                 <span class="caret"></span></button>
-                <?php $categoriesDir = 'config/blocks/'; ?>
-                <?php $categories = array_diff(scandir($categoriesDir), array('..', '.')); ?>
+                <?php $block_list_json = file_get_contents('../extensions/page_assembler/block_list.json') ?>
+                <?php $block_list = json_decode($block_list_json, true); ?>
                 <ul class="dropdown-menu main-dropdown">
-                    <?php foreach ($categories as $category): ?>
+                    <?php foreach ($block_list as $key => $category): ?>
+                        <?php $categoryName = $key; ?>
                         <?php echo '<li class="dropdown-submenu">'?>
-                            <?php echo '<a class="test" tabindex="-1" href="#">'.$category.'<span class="caret"></span></a>'?>
+                            <?php echo '<a class="test" tabindex="-1" href="#">'.$key.' blocks<span class="caret"></span></a>'?>
                             <?php echo '<ul class="dropdown-menu">' ?>
-                                <?php $blocksDir = 'config/blocks/'.$category; ?>
-                                <?php $blocks = array_diff(scandir($blocksDir), array('..', '.')); ?>
-                                <?php foreach ($blocks as $block): ?>
-                                <?php echo '<li><a tabindex="-1" class="add-block test" data-href="config/blocks/'.$category.'/'.$block.'">'.substr($block,0,-5).'</a></li>' ?>
+                                <?php foreach ($category as $key => $block): ?>
+                                    <?php echo '<li><a tabindex="-1" class="add-block test" data-href="'.$key.' '.$categoryName.'">'.$key.' block</a></li>' ?>
                                 <?php endforeach; ?>
                             <?php echo '</ul>'; ?>
                         <?php echo '</li>' ?>
@@ -218,7 +216,8 @@ if (isset($url['c'])) {
 
                     document.getElementsByTagName( "head" )[0].appendChild( link );
                 }
-            </script>       
+            </script>
+            <script src="js/blocks.js"></script>       
         </div>
         <script type="text/javascript" src="js/page-assembler.js"></script>
             </div>
@@ -235,7 +234,7 @@ if (isset($url['c'])) {
                 "name" 		=> "reg"
             ]
         ];
-        echo '<a href="/block_manager/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
+        echo '<a href="/tadasm/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
         pageAssemblerDBexist('pa_page_settings');
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_list'], $formClass->form());
