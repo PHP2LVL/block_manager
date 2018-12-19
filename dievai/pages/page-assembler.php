@@ -244,15 +244,17 @@ if (isset($url['c'])) {
         
 
         if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
+            $pageId = $insertQuery['id'];
             $title =  escape($_POST['Pavadinimas']);
+            $lang = lang(); 
             $metaTitle = escape($_POST['metaPavadinimas']);
             $metaDescription =  escape($_POST['metaAprasymas']);
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['F_urls']);
 
             $insertQuery =  mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
-            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
-            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")");
+            (`page_id`,`title`,`lang`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
+            VALUES (" . $pageId "," . $title . "," . $lang" ," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")");
             
             redirect(
                 url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
