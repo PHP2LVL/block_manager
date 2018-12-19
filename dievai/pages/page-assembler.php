@@ -252,18 +252,22 @@ if (isset($url['c'])) {
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['F_urls']);
 
-            $insertQuery =  mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
+            $insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
             (`page_id`,`title`,`lang`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
-            VALUES (" . $pageId "," . $title . "," . $lang" ," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")");
+            VALUES (" . $pageId . ", '" . $title . "', '" . $lang . "', '" . $metaTitle . "', '" . $metaDescription . "', '" . $metaKeywords . "', '" . $friendlyUrl . "')";
             
-            redirect(
-                url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
-                "header",
-                [
-                    'type'      => 'success',
-                    'message'   => $lang['admin']['configuration_updated']
-                ]
-            );
+            if(mysql_query1($insertQuery)) {
+               
+                redirect(
+                    url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
+                    "header",
+                    [
+                        'type'      => 'success',
+                        'message'   => $lang['admin']['configuration_updated']
+                    ]
+                ); 
+            }
+            
             
         }
         $settings = [
