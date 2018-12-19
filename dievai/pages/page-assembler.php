@@ -237,7 +237,7 @@ if (isset($url['c'])) {
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['F_urls']);
             $statusID = escape($_POST['rodymas']);
-            //var_dump($statusID);
+            
            
 
             $insertQuery = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
