@@ -30,11 +30,6 @@ if (isset($url['c'])) {
         ];
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
-        
-
-        
-
-
 ?>
 
 
@@ -162,9 +157,10 @@ if (isset($url['c'])) {
         //pages view
 
         //$sqlPages = mysql_query1( "SELECT * from `" . LENTELES_PRIESAGA ."page` WHERE `show`= 'Y' AND `lang` = " . escape( lang() ) . " order by place" );
-        $sqlPages = mysql_query1( "SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'Y' AND `lang` = " . escape( lang() ) . " order by id" );
-        var_dump($sqlPages);
-
+        //$sqlPages = mysql_query1( "SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'Y' AND `lang` = " . escape( lang() ) . " order by id" );
+        //var_dump($sqlPages);
+        $selectSql = mysql_query1("SELECT title FROM `" . LENTELES_PRIESAGA . "pa_page_settings`"); 
+        var_dump($selectSql);
 
 
 
@@ -234,18 +230,19 @@ if (isset($url['c'])) {
         
 
         if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
+            $lang = lang();
             $title =  escape($_POST['Pavadinimas']);
             $metaTitle = escape($_POST['metaPavadinimas']);
             $metaDescription =  escape($_POST['metaAprasymas']);
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['F_urls']);
 
-            $insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
+            $insertQuery = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
             (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
-            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")";
+            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")");
 
-            var_dump( mysql_query1($insertQuery));
-            /*
+            $sql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET page_id=id");
+            $sql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET lang='$lang'");
             redirect(
                 url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
                 "header",
@@ -254,16 +251,9 @@ if (isset($url['c'])) {
                     'message'   => $lang['admin']['configuration_updated']
                 ]
             );
-            */
+            
         }
-
-//select data from database
-        $selectQuery = "SELECT * FROM " . LENTELES_PRIESAGA . "pa_page_settings WHERE ID='25'";
-        //var_dump($selectQuery);
-        $result = mysql_query1($selectQuery);
-        var_dump($result);
         $settings = [
-            //$conf = [];
             "Form" => [
                 "action"    => "", 
                 "method"    => "post", 
@@ -307,8 +297,11 @@ if (isset($url['c'])) {
                 'form_line' => 'form-not-line',
             ]
         ];
+        $formClass = new Form($settings);
+        lentele($lang['admin']['pageassembler_list'], $formClass->form());
 
 
+}
 ?>
     <div class='modal-insert-place'></div>
     
@@ -316,35 +309,6 @@ if (isset($url['c'])) {
     <script src="../dievai/js/class.insertblock.js" async></script>
 
 <?php   
-    if ($url['c'] == 'list') {
-        $settings = [ 
-            "Form" => [
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> "reg"
-            ]
-            ];
-        $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_list'], $formClass->form());
-    }
-    if ($url['c'] == 'settings') {
-        $settings = [ 
-            "Form" => [
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> "reg"
-            ]
-            ];
 
-        $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_settings'], $formClass->form());
-        
-    }
 }
 ?>
