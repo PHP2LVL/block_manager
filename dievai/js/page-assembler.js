@@ -197,20 +197,21 @@ function addClassBox(elem) {
     App.init();
 }
 
-    document.addEventListener("click", function(event){
-        var targetElement = event.target || event.srcElement;
-        console.log(targetElement.parentNode);
-        //addClassBox(targetElement.parentNode);
-    });
+// document.addEventListener("click", function(event){
+//     var targetElement = event.target || event.srcElement;
+//     console.log(targetElement.parentNode);
+//     //addClassBox(targetElement.parentNode);
+// });
 
-    function CssFileItraukimas(){
-        var link = document.createElement( "link" );
-        src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
-        link.href = src;
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        link.media = "screen,print";
+function CssFileItraukimas(){
+    var link = document.createElement( "link" );
+    src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
+    link.href = src;
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.media = "screen,print";
 
-        document.getElementsByTagName( "head" )[0].appendChild( link );
-    }
+    document.getElementsByTagName( "head" )[0].appendChild( link );
+}
+
 

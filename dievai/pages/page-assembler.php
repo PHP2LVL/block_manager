@@ -40,28 +40,23 @@ if (isset($url['c'])) {
 
         }
         if (empty($_POST)){
-        $settings = array();
-        $settings["Form"] = [ 
-             
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> ""
-            
-        ];
+            $settings = [
+                "Form"  => [
+                    "action" 	=> "", 
+                    "method" 	=> "post", 
+                    
+                ],
 
-        $settings[""] = [
-				"type" 		=> "submit", 
-				"name" 		=> "saveBlockInfo", 
-				"value" 	=> $lang['admin']['save'], 
-				'form_line'	=> 'form-not-line',
-        ];
-        
+                ''      => [
+                    "type" 		=> "submit", 
+                    "name" 		=> "saveBlockInfo", 
+                    "value" 	=> $lang['admin']['save'], 
+                    'form_line'	=> 'form-not-line',
+                ]
+            ];
        
-        $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_add'], $formClass->form());
+            $formClass = new Form($settings);
+            lentele($lang['admin']['pageassembler_add'], $formClass->form());
         ?>         
     <script src="js/blocks.js"></script>
     <script src="../dievai/js/manuimage.js"></script>
@@ -187,42 +182,55 @@ if (isset($url['c'])) {
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
 
         ?>
-        <div class="row">
-            <div class="dropdown col-lg-12">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Add New Block
-                <span class="caret"></span></button>
-                <?php $categoriesDir = 'config/blocks/'; ?>
-                <?php $categories = array_diff(scandir($categoriesDir), array('..', '.')); ?>
-                <ul class="dropdown-menu main-dropdown">
-                    <?php foreach ($categories as $category): ?>
-                        <?php echo '<li class="dropdown-submenu">'?>
-                            <?php echo '<a class="test" tabindex="-1" href="#">'.$category.'<span class="caret"></span></a>'?>
-                            <?php echo '<ul class="dropdown-menu">' ?>
+        <div class="card">
+			<div class="header">
+				<h2>
+                    Add New Block
+                </h2>
+			</div>
+			<div class="body clearfix">
+                <?php 
+                    $categoriesDir      = 'config/blocks/';
+                    $categories         = array_diff(scandir($categoriesDir), ['..', '.']);
+                    $categoriesCount    = 0;
+                ?>
+                    
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                    <?php foreach ($categories as $category){ $categoriesCount ++; ?>
+                        <li role="presentation"<?php echo ($categoriesCount === 1 ? ' class="active"' : ''); ?>>
+                            <a href="#<?php echo $category; ?>" data-toggle="tab">
+                                <?php echo $category; ?>
+                            </a>
+                        </li>
+                    <?php } ?>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                <?php $categoriesCount = 0; ?>
+                    <?php foreach ($categories as $category){ $categoriesCount ++; ?>
+                        <div role="tabpanel" class="tab-pane fade<?php echo ($categoriesCount === 1 ? ' active in' : ''); ?>" id="<?php echo $category; ?>">
+                            <b><?php echo $category; ?></b>
+                            <p>
                                 <?php $blocksDir = 'config/blocks/'.$category; ?>
                                 <?php $blocks = array_diff(scandir($blocksDir), array('..', '.')); ?>
-                                <?php foreach ($blocks as $block): ?>
-                                <?php echo '<li><a tabindex="-1" class="add-block test" data-href="config/blocks/'.$category.'/'.$block.'">'.substr($block,0,-5).'</a></li>' ?>
-                                <?php endforeach; ?>
-                            <?php echo '</ul>'; ?>
-                        <?php echo '</li>' ?>
-                    <?php endforeach; ?>
-                </ul>
-            <script>
-                function CssFileItraukimas(){
-                    var link = document.createElement( "link" );
-                    src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
-                    link.href = src;
-                    link.type = "text/css";
-                    link.rel = "stylesheet";
-                    link.media = "screen,print";
-
-                    document.getElementsByTagName( "head" )[0].appendChild( link );
-                }
-            </script>       
-        </div>
+                                <?php foreach ($blocks as $block){ ?>
+                                    <li>
+                                        <a tabindex="-1" class="add-block test" href="config/blocks/<?php echo $category; ?>/<?php echo $block; ?>">
+                                            <?php echo substr($block,0,-5); ?>
+                                        </a>
+                                    </li>
+                                <?php } ?>
+                            </p>
+                        </div>
+                    <?php } ?>
+                </div>
+                   
+			</div>
+		</div>
         <script type="text/javascript" src="js/page-assembler.js"></script>
-            </div>
-        </div>
+        <script type="text/javascript" src="js/blocks.js"></script>
     <?php }  
     if ($url['c'] == 'list') {
         $settings = [ 
