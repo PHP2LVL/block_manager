@@ -236,13 +236,17 @@ if (isset($url['c'])) {
             $metaDescription =  escape($_POST['metaAprasymas']);
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['F_urls']);
+            $statusID = escape($_POST['rodymas']);
+            //var_dump($statusID);
+           
 
             $insertQuery = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
-            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
-            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $friendlyUrl .")");
+            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`status_id`,`friendly_url`) 
+            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $statusID ."," . $friendlyUrl .")");
 
             $sql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET page_id=id");
             $sql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET lang='$lang'");
+
             redirect(
                 url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
                 "header",
@@ -253,6 +257,7 @@ if (isset($url['c'])) {
             );
             
         }
+        var_dump($insertQuery);
         $settings = [
             "Form" => [
                 "action"    => "", 
@@ -261,25 +266,31 @@ if (isset($url['c'])) {
             ],
             $lang['admin']['title']  => [
                 "type"  => "text", 
-                "value" => input($result['title'] ), 
+                "value" => input($insertQuery['title'] ), 
                 "name"  => "Pavadinimas"
             ],
             $lang['admin']['metaTitle']  => [
                 "type"  => "text", 
-                "value" => input($result['meta_title'] ), 
+                "value" => input($insertQuery['meta_title'] ), 
                 "name"  => "metaPavadinimas"
             ],
             $lang['admin']['metaDescription']  => [
                 "type"  => "text", 
-                "value" => input($result['meta_desc'] ), 
+                "value" => input($insertQuery['meta_desc'] ), 
                 "name"  => "metaAprasymas"
             ],
             $lang['admin']['metaKeywords']  => [
                 "type"  => "text", 
-                "value" => input($result['meta_keywords'] ), 
+                "value" => input($insertQuery['meta_keywords'] ), 
                 "name"  => "metaKeywords"
             ],
-            
+            $lang['admin']['statusID'] => [
+                "type"  => "switch", 
+                "value" => 1, 
+                "name"  => "rodymas",
+                'form_line' => 'form-not-line',
+                'checked'   => (input($insertQuery['status_id']) === 1)
+            ],
             "Friendly url:"             => [
                 "type"      => "select", 
                 "value"     =>  [
@@ -287,7 +298,7 @@ if (isset($url['c'])) {
                     ';'=> ';', 
                     '0'=> $lang['admin']['off']
                 ], 
-                "selected"  => $result['friendly_url'], 
+                "selected"  => $insertQuery['friendly_url'], 
                 "name"      => "F_urls"
             ],
             ""                                     => [
@@ -298,7 +309,7 @@ if (isset($url['c'])) {
             ]
         ];
         $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_list'], $formClass->form());
+        lentele($lang['admin']['pageassembler_settings'], $formClass->form());
 
 
 }
