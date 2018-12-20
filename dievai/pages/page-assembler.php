@@ -58,7 +58,6 @@ if (isset($url['c'])) {
             $formClass = new Form($settings);
             lentele($lang['admin']['pageassembler_add'], $formClass->form());
         ?>         
-    <script src="js/blocks.js"></script>
     <script src="../dievai/js/manuimage.js"></script>
     <?php } 
     }
@@ -154,7 +153,7 @@ if (isset($url['c'])) {
                         $blockJSON =  $pageContent[$block]['content'];
                         //$json = json_decode($blockJSON, true);                    
                         $content = json_decode($blockJSON, true);
-                    // echo $pageContent[$block]['id'] . "<br>";
+                        // echo $pageContent[$block]['id'] . "<br>";
                         //echo "<pre>"; print_r($content); echo "</pre>";
                         $localBlockConfig = json_decode( file_get_contents($blockPath,true) , true);
                         $content['orderID'] = $pageContent[$block]['order_id'];
@@ -165,7 +164,7 @@ if (isset($url['c'])) {
                     } 
                     
                     $blockList = $extensionPrefix . '/page_assembler/block_list.json';
-                    $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->text->col_2_text_1_img;
+                    $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->team->team1;
                     
                 }
         }
@@ -189,18 +188,18 @@ if (isset($url['c'])) {
                 </h2>
 			</div>
 			<div class="body clearfix">
-                <?php 
-                    $categoriesDir      = 'config/blocks/';
-                    $categories         = array_diff(scandir($categoriesDir), ['..', '.']);
-                    $categoriesCount    = 0;
+                <?php
+                    $block_list_json = file_get_contents('../extensions/page_assembler/block_list.json');
+                    $block_list = json_decode($block_list_json, true);
+                    $categoriesCount  = 0;
                 ?>
                     
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                    <?php foreach ($categories as $category){ $categoriesCount ++; ?>
+                    <?php foreach ($block_list as $key => $category){ $categoriesCount ++; ?>
                         <li role="presentation"<?php echo ($categoriesCount === 1 ? ' class="active"' : ''); ?>>
-                            <a href="#<?php echo $category; ?>" data-toggle="tab">
-                                <?php echo $category; ?>
+                            <a href="#<?php echo $key; ?>" data-toggle="tab">
+                                <?php echo ucfirst($key.' blocks'); ?>
                             </a>
                         </li>
                     <?php } ?>
@@ -208,17 +207,21 @@ if (isset($url['c'])) {
 
                 <!-- Tab panes -->
                 <div class="tab-content">
+                <?php $pathArray = explode('/' , $_SERVER['REQUEST_URI']); ?>
+                <?php for ($i = 0; $i < (sizeof($pathArray)-1); $i++):?>
+                <?php $out[] = $pathArray[$i] ?>
+                <?php endfor ?>
+                <?php $realPath = implode('/', $out); ?> 
                 <?php $categoriesCount = 0; ?>
-                    <?php foreach ($categories as $category){ $categoriesCount ++; ?>
-                        <div role="tabpanel" class="tab-pane fade<?php echo ($categoriesCount === 1 ? ' active in' : ''); ?>" id="<?php echo $category; ?>">
-                            <b><?php echo $category; ?></b>
+                    <?php foreach ($block_list as $key => $category){ $categoriesCount ++; ?>
+                        <?php $categoryName = $key; ?>
+                        <div role="tabpanel" class="tab-pane fade <?php echo ($categoriesCount === 1 ? ' active in' : ''); ?>" id="<?php echo $key ?>">
+                            <b><?php echo ucfirst($key); ?></b>
                             <p>
-                                <?php $blocksDir = 'config/blocks/'.$category; ?>
-                                <?php $blocks = array_diff(scandir($blocksDir), array('..', '.')); ?>
-                                <?php foreach ($blocks as $block){ ?>
+                                <?php foreach ($category as $key => $block){ ?>
                                     <li>
-                                        <a tabindex="-1" class="add-block test" href="config/blocks/<?php echo $category; ?>/<?php echo $block; ?>">
-                                            <?php echo substr($block,0,-5); ?>
+                                        <?php echo '<a tabindex="-1" class="add-block test" href="'.$realPath.'/admin;a,pageAssembler;c,edit;pageid,'.$_GET['pageId'].';insertBlock,'.$key.';blockType,'.$categoryName.'">' ?>
+                                            <?php echo ucfirst($key.' block') ?>
                                         </a>
                                     </li>
                                 <?php } ?>
@@ -226,11 +229,24 @@ if (isset($url['c'])) {
                         </div>
                     <?php } ?>
                 </div>
-                   
 			</div>
 		</div>
-        <script type="text/javascript" src="js/page-assembler.js"></script>
-        <script type="text/javascript" src="js/blocks.js"></script>
+    </div>
+    <script>
+        function CssFileItraukimas(){
+            var link = document.createElement( "link" );
+            src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
+            link.href = src;
+            link.type = "text/css";
+            link.rel = "stylesheet";
+            link.media = "screen,print";
+
+            document.getElementsByTagName( "head" )[0].appendChild( link );
+            }
+    </script>
+    <script type="text/javascript" src="js/page-assembler.js"></script>
+    <script src="js/blocks.js"></script>   
+            
     <?php }  
     if ($url['c'] == 'list') {
         $settings = [ 
@@ -243,7 +259,7 @@ if (isset($url['c'])) {
                 "name" 		=> "reg"
             ]
         ];
-        echo '<a href="/block_manager/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
+        echo '<a href="http://localhost:8081/2lvl/Tadas/tadasm/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
         pageAssemblerDBexist('pa_page_settings');
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_list'], $formClass->form());

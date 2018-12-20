@@ -6,7 +6,13 @@
         "text_4_col_spans":"/page_assembler/text_blocks/4-col-text-spans/config.json"
         
     },
+    "list":{
+        "col_12_list":"/page_assembler/list_blocks/12-col-list/config.json"
+    },
     "team":{
-        "team_1":"/page_assembler/team/config.json"
+        "team1":"/page_assembler/team_blocks/team_block/config.json"
+    },
+    "form":{
+        "registration_form":"/page_assembler/form_blocks/registration_form/config.json"
     }
 }
