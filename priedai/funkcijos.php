@@ -743,6 +743,8 @@ if(! function_exists('getFiles')) {
 if(! function_exists('getDirs')) {
 	function getDirs( $dir, $skip = '' ) {
 
+		$return = [];
+
 		if ( $handle = opendir( $dir ) ) {
 			while ( FALSE !== ( $file = readdir( $handle ) ) ) {
 				if ( $file != "." && $file != ".." && $file != ".svn" && is_dir( $dir . $file ) && ( is_array( $skip ) ? !in_array( $file, $skip ) : TRUE ) && $skip != $file ) {

@@ -49,7 +49,49 @@
 		return $result;
 	}
 
+	function checkBlockListStatus(){
+		$path = '../extensions/page_assembler/block_list.json';
+		$blockList = json_decode(file_get_contents($path,true));
 
+		if (array_key_exists('generated', $blockList)){
+			$generated = $blockList->generated;
+			if (time() > $generated){
+				$tree['content'] = generateNewBlockList();
+				$tree['generated'] = time();
+				$blockList2 = fopen($path, "w+");
+				fwrite($blockList2, json_encode($tree));
+				fclose($blockList2);
+			} else {
+				return true;
+			}
+		} else {
+			
+			$tree['content'] = generateNewBlockList();
+			$tree['generated'] = time();
+			$_SESSION['NewBlockList'] = $tree;
+			$blockList2 = fopen($path, "w+");
+			fwrite($blockList2, json_encode($tree));
+			fclose($blockList2);
+		}	
+	}
 
+	function generateNewBlockList($path = '../extensions/page_assembler/'){
+		$categories = getFiles($path);
+		$curFolder = basename($path);
+		if(is_array($categories)) {
+			foreach ($categories as $files) {
+				if ($files['type'] == 'dir'){
+					$newPath  = $path . $files['name'] .'/';
+					if(! empty(generateNewBlockList($newPath))) {
+						$newArray[$files['name']] = generateNewBlockList($newPath);
+					}
+				} else if($files['type'] == 'file' && $files['name'] == 'config.json') {
+					$newArray = $path . $files['name'];
+				}
+			}
+		}
+		return empty($newArray) ? null : $newArray;
+		
+	}
 ?>
 
