@@ -39,3 +39,10 @@ function blockContent($data)
 
     return $content;
 }
+
+
+/**
+ * Page assembler
+ */
+
+//  function 
