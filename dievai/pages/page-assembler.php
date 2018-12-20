@@ -154,13 +154,20 @@ if (isset($url['c'])) {
 
     } 
     if ($url['c'] == 'list') {
-        //pages view
+        
+        $selectSql = mysql_query1("SELECT *FROM `" . LENTELES_PRIESAGA . "pa_page_settings`"); 
+        //var_dump($selectSql);
+        foreach ($selectSql as $irasas) {
+            echo $irasas['title'] ."<form method = 'post'>" ."<input type='submit' value='edit' name='edit'></input>" . "<input type = 'submit' value='delete' name='delete'></input>". "</form>"."<br>";
+        }
+        if (isset($_POST['edit'])) {
+            //$irasoAtnaujinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
+        }elseif (isset($_POST['delete'])) {
+            $title = $irasas['title'];
+            $irasoTrinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
+            
 
-        //$sqlPages = mysql_query1( "SELECT * from `" . LENTELES_PRIESAGA ."page` WHERE `show`= 'Y' AND `lang` = " . escape( lang() ) . " order by place" );
-        //$sqlPages = mysql_query1( "SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'Y' AND `lang` = " . escape( lang() ) . " order by id" );
-        //var_dump($sqlPages);
-        $selectSql = mysql_query1("SELECT title FROM `" . LENTELES_PRIESAGA . "pa_page_settings`"); 
-        var_dump($selectSql);
+        }
 
 
 
