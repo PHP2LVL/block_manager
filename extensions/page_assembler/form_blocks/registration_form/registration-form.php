@@ -1,4 +1,4 @@
-<div class="row d-flex" id='<?php echo $content['parentId'];?>' orderID='<?php echo $content['orderID'];?>' data-filename =  'form_blocks' data-filename = 'registration-form' onclick="addClassBox(this)">
+<div class="row d-flex" id='<?php echo $content['parentId'];?>' orderID='<?php echo $content['orderID'];?>' data-filename = 'form_blocks' data-filename = 'registration_form' onclick="addClassBox(this)">
     <div class="card">
         <div class="header">
             <h2><?php echo $content[0]['value'];?></h2>

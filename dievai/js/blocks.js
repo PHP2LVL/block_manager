@@ -3,7 +3,8 @@
         $("#page-builder-zone").append(data);
     });
 }); */
-
+/*
+ 
 $('.add-block').on('click', function() {
     get = ($(this).data('href')).split(' ');
     console.log(get[0], get[1]);
@@ -13,10 +14,10 @@ $('.add-block').on('click', function() {
        //alert('page content: ' + data);
     }
     );
-});
+}); */
 
 $('.dropdown-submenu a.test').on("click", function(e){
     $(this).next('ul').toggle();
     e.stopPropagation();
-    e.preventDefault();
+    //e.preventDefault();
 });

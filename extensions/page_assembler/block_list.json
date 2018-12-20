@@ -13,6 +13,6 @@
         "team1":"/page_assembler/team_blocks/team_block/config.json"
     },
     "form":{
-        "registration_form":"/page_assembler/form_blocks/registration-form/config.json"
+        "registration_form":"/page_assembler/form_blocks/registration_form/config.json"
     }
 }

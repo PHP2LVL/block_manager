@@ -184,9 +184,14 @@ if (isset($url['c'])) {
    
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
-
         ?>
+        
         <div class="row">
+            <?php $pathArray = explode('/' , $_SERVER['REQUEST_URI']); ?>
+            <?php for ($i = 0; $i < (sizeof($pathArray)-1); $i++):?>
+            <?php $out[] = $pathArray[$i] ?>
+            <?php endfor ?>
+            <?php $realPath = implode('/', $out); ?> 
             <div class="dropdown col-lg-12">
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Add New Block
                 <span class="caret"></span></button>
@@ -196,32 +201,33 @@ if (isset($url['c'])) {
                     <?php foreach ($block_list as $key => $category): ?>
                         <?php $categoryName = $key; ?>
                         <?php echo '<li class="dropdown-submenu">'?>
-                            <?php echo '<a class="test" tabindex="-1" href="#">'.$key.' blocks<span class="caret"></span></a>'?>
+                            <?php echo '<a class="test" tabindex="-1">'.$key.' blocks<span class="caret"></span></a>'?>
                             <?php echo '<ul class="dropdown-menu">' ?>
                                 <?php foreach ($category as $key => $block): ?>
-                                    <?php echo '<li><a tabindex="-1" class="add-block test" data-href="'.$key.' '.$categoryName.'">'.$key.' block</a></li>' ?>
+                                    <?php echo '<li><a tabindex="-1" class="add-block test" href="'.$realPath.'/admin;a,pageAssembler;c,edit;pageid,'.$_GET['pageId'].';insertBlock,'.$key.';blockType,'.$categoryName.'">'.$key.' block</a></li>' ?>
                                 <?php endforeach; ?>
                             <?php echo '</ul>'; ?>
                         <?php echo '</li>' ?>
                     <?php endforeach; ?>
-                </ul>
-            <script>
-                function CssFileItraukimas(){
-                    var link = document.createElement( "link" );
-                    src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
-                    link.href = src;
-                    link.type = "text/css";
-                    link.rel = "stylesheet";
-                    link.media = "screen,print";
-
-                    document.getElementsByTagName( "head" )[0].appendChild( link );
-                }
-            </script>
-            <script src="js/blocks.js"></script>       
-        </div>
-        <script type="text/javascript" src="js/page-assembler.js"></script>
+                </ul> 
             </div>
         </div>
+    </div>
+    <script>
+        function CssFileItraukimas(){
+            var link = document.createElement( "link" );
+            src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
+            link.href = src;
+            link.type = "text/css";
+            link.rel = "stylesheet";
+            link.media = "screen,print";
+
+            document.getElementsByTagName( "head" )[0].appendChild( link );
+            }
+    </script>
+    <script type="text/javascript" src="js/page-assembler.js"></script>
+    <script src="js/blocks.js"></script>   
+            
     <?php }  
     if ($url['c'] == 'list') {
         $settings = [ 
@@ -234,7 +240,7 @@ if (isset($url['c'])) {
                 "name" 		=> "reg"
             ]
         ];
-        echo '<a href="/tadasm/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
+        echo '<a href="http://localhost:8081/2lvl/Tadas/tadasm/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
         pageAssemblerDBexist('pa_page_settings');
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_list'], $formClass->form());

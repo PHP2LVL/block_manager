@@ -10,7 +10,7 @@
             "bootstrap":"3.0",
             "type": "form",
             "title":"registration block",
-            "backEndHtmlFile":"/page_assembler/form_blocks/registration_block/registration-block.php",
+            "backEndHtmlFile":"/page_assembler/form_blocks/registration_form/registration-form.php",
             "frontEndHtml":""
         },
     "content":
@@ -24,19 +24,19 @@
             "1":{
                 "type":"text",
                 "style":"",
-                "name":"First_dropdown_action_name",
+                "name":"First_dp_action",
                 "value":""
             },
             "2":{
                 "type":"text",
                 "style":"",
-                "name":"Second_dropdown_action_name",
+                "name":"Second_dp_action",
                 "value":""
             },
             "3":{
                 "type":"text",
                 "style":"",
-                "name":"Third_dropdown_action_name",
+                "name":"Third_dp_action",
                 "value":""
             },
             "4":{
@@ -60,13 +60,13 @@
             "7":{
                 "type":"text",
                 "style":"",
-                "name":"Define_radio_input_first_option",
+                "name":"First_radio_option",
                 "value":"male"
             },
             "8":{
                 "type":"text",
                 "style":"",
-                "name":"Define_radio_input_first_optioDefine_third_input",
+                "name":"Second_radio_option",
                 "value":"female"
             },
             "9":{
