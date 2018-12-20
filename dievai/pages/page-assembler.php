@@ -184,34 +184,58 @@ if (isset($url['c'])) {
    
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_add'], $formClass->form());
+
         ?>
-        
-        <div class="row">
-            <?php $pathArray = explode('/' , $_SERVER['REQUEST_URI']); ?>
-            <?php for ($i = 0; $i < (sizeof($pathArray)-1); $i++):?>
-            <?php $out[] = $pathArray[$i] ?>
-            <?php endfor ?>
-            <?php $realPath = implode('/', $out); ?> 
-            <div class="dropdown col-lg-12">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Add New Block
-                <span class="caret"></span></button>
-                <?php $block_list_json = file_get_contents('../extensions/page_assembler/block_list.json') ?>
-                <?php $block_list = json_decode($block_list_json, true); ?>
-                <ul class="dropdown-menu main-dropdown">
-                    <?php foreach ($block_list as $key => $category): ?>
+        <div class="card">
+			<div class="header">
+				<h2>
+                    Add New Block
+                </h2>
+			</div>
+			<div class="body clearfix">
+                <?php
+                    $block_list_json = file_get_contents('../extensions/page_assembler/block_list.json');
+                    $block_list = json_decode($block_list_json, true);
+                    $categoriesCount  = 0;
+                ?>
+                    
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                    <?php foreach ($block_list as $key => $category){ $categoriesCount ++; ?>
+                        <li role="presentation"<?php echo ($categoriesCount === 1 ? ' class="active"' : ''); ?>>
+                            <a href="#<?php echo $key; ?>" data-toggle="tab">
+                                <?php echo ucfirst($key.' blocks'); ?>
+                            </a>
+                        </li>
+                    <?php } ?>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                <?php $pathArray = explode('/' , $_SERVER['REQUEST_URI']); ?>
+                <?php for ($i = 0; $i < (sizeof($pathArray)-1); $i++):?>
+                <?php $out[] = $pathArray[$i] ?>
+                <?php endfor ?>
+                <?php $realPath = implode('/', $out); ?> 
+                <?php $categoriesCount = 0; ?>
+                    <?php foreach ($block_list as $key => $category){ $categoriesCount ++; ?>
                         <?php $categoryName = $key; ?>
-                        <?php echo '<li class="dropdown-submenu">'?>
-                            <?php echo '<a class="test" tabindex="-1">'.$key.' blocks<span class="caret"></span></a>'?>
-                            <?php echo '<ul class="dropdown-menu">' ?>
-                                <?php foreach ($category as $key => $block): ?>
-                                    <?php echo '<li><a tabindex="-1" class="add-block test" href="'.$realPath.'/admin;a,pageAssembler;c,edit;pageid,'.$_GET['pageId'].';insertBlock,'.$key.';blockType,'.$categoryName.'">'.$key.' block</a></li>' ?>
-                                <?php endforeach; ?>
-                            <?php echo '</ul>'; ?>
-                        <?php echo '</li>' ?>
-                    <?php endforeach; ?>
-                </ul> 
-            </div>
-        </div>
+                        <div role="tabpanel" class="tab-pane fade <?php echo ($categoriesCount === 1 ? ' active in' : ''); ?>" id="<?php echo $key ?>">
+                            <b><?php echo ucfirst($key); ?></b>
+                            <p>
+                                <?php foreach ($category as $key => $block){ ?>
+                                    <li>
+                                        <?php echo '<a tabindex="-1" class="add-block test" href="'.$realPath.'/admin;a,pageAssembler;c,edit;pageid,'.$_GET['pageId'].';insertBlock,'.$key.';blockType,'.$categoryName.'">' ?>
+                                            <?php echo ucfirst($key.' block') ?>
+                                        </a>
+                                    </li>
+                                <?php } ?>
+                            </p>
+                        </div>
+                    <?php } ?>
+                </div>
+			</div>
+		</div>
     </div>
     <script>
         function CssFileItraukimas(){
