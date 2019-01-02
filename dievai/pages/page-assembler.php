@@ -154,12 +154,40 @@ if (isset($url['c'])) {
 
     } 
     if ($url['c'] == 'list') {
-        
-        $selectSql = mysql_query1("SELECT *FROM `" . LENTELES_PRIESAGA . "pa_page_settings`"); 
-        //var_dump($selectSql);
-        foreach ($selectSql as $irasas) {
-            echo $irasas['title'] ."<form method = 'post'>" ."<input type='submit' value='edit' name='edit'></input>" . "<input type = 'submit' value='delete' name='delete'></input>". "</form>"."<br>";
+
+    // Page Path    
+    $pathArray = explode('/' , $_SERVER['REQUEST_URI']);
+        for ($i = 0; $i < (sizeof($pathArray)-1); $i++){
+            $out[] = $pathArray[$i];
         }
+    $realPath = implode('/', $out); 
+                
+        echo '<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">';
+            echo '<div class="card">';
+                echo '<div class="header">';
+                    echo '<h2>Puslapių sąrašas';     
+                echo '</div>';
+                echo '<div class="body clearfix">';
+                    echo '<div class="dd nestable-with-handle">';
+                        $selectSql = mysql_query1("SELECT *FROM `" . LENTELES_PRIESAGA . "pa_page_settings`");
+                        foreach ($selectSql as $irasas){
+                            echo '<ol class="dd-list">';
+                                echo '<li class="dd-item dd3-item" data-id="1">';
+                                    echo '<div class="dd-handle dd3-handle"></div>';
+                                    echo '<div class="dd3-content">';
+                                        echo '<form method = "post" id="pageListForm">';
+                                            echo '<input type="submit" id="edit" value="edit" name="edit"></input>';
+                                            echo '<input type="submit" id="delete" value="delete" name="delete"></input>';
+                                        echo '</form>';
+                                        echo '<a href='.$realPath.'/admin;a,pageAssembler;c,edit;pageid,'.$irasas['page_id'].'>'.$irasas['title'].'</a>';
+                                    echo '</div>';
+                                echo '</li>';
+                            echo '</ol>';
+                        }
+                    echo '</div>';			
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
         if (isset($_POST['edit'])) {
             //$irasoAtnaujinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
         }elseif (isset($_POST['delete'])) {
@@ -264,7 +292,7 @@ if (isset($url['c'])) {
             );
             
         }
-        var_dump($insertQuery);
+        
         $settings = [
             "Form" => [
                 "action"    => "", 
