@@ -85,8 +85,8 @@ if (isset($url['c'])) {
                 $blockName = $_GET['insertBlock'];
                 $blockType = $_GET['blockType'];
                 $extensionPrefix = "../extensions";
-                $blockList = $extensionPrefix . '/page_assembler/block_list.json';
-                $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->$blockType->$blockName; //col_2_text_1_img;
+                $blockList = $extensionPrefix . '/page_assembler/block_list.json';               
+                $blockPath = json_decode(file_get_contents($blockList))->content->{$blockType}->{$blockName}; //col_2_text_1_img;
                 $blockJSON = file_get_contents($blockPath,true);
                 $json = json_decode($blockJSON, true);
                 $content = $json['content'];
@@ -109,6 +109,17 @@ if (isset($url['c'])) {
                         ];
                     }
                 }
+                $settings[""] = [
+                    "type" 		=> "submit", 
+                    "name" 		=> "addblock", 
+                    "value" 	=> $lang['admin']['save'], 
+                    'form_line'	=> 'form-not-line',
+                ];
+            
+           
+                $formClass = new Form($settings);
+                lentele($lang['admin']['pageassembler_add'], $formClass->form());
+                
             }
 
             if (isset( $_POST['addblock'] ) ) {
@@ -121,11 +132,18 @@ if (isset($url['c'])) {
                     $i++;
                 }
                 $contentToDb = json_encode($content);
-                //var_dump($contentToDb);
-                //echo "<pre>"; print_r($content); echo "</pre>";
                 $sql = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_data` (page_id,type,lang, content) VALUES (" . escape($pageId) . ", " . escape($blockPath) . ", " . escape( lang() ) . ", " .escape( $contentToDb ) . ")";
                 mysql_query1($sql);
                 unset($sql);
+                $_SESSION['page-assembler-pageId'] = null;
+                redirect(
+                    url("?id," . $url['id'] . ";c," . $url['c']),
+                    "header",
+                    [
+                        'type'		=> 'success',
+                        'message' 	=> $lang['admin']['pa-noPage']
+                    ]
+                );
                 
             }
 
@@ -147,38 +165,22 @@ if (isset($url['c'])) {
                 } else {
                     $extensionPrefix = "../extensions";
                     echo '<div id="page-builder-zone">';
-                    foreach ($pageContent as $block => $value) {
-                        
-                        $blockPath = $pageContent[$block]['type'];                    
-                        $blockJSON =  $pageContent[$block]['content'];
-                        //$json = json_decode($blockJSON, true);                    
-                        $content = json_decode($blockJSON, true);
-                        // echo $pageContent[$block]['id'] . "<br>";
-                        //echo "<pre>"; print_r($content); echo "</pre>";
-                        $localBlockConfig = json_decode( file_get_contents($blockPath,true) , true);
-                        $content['orderID'] = $pageContent[$block]['order_id'];
-                        $content['parentId'] = $pageContent[$block]['parent_id'];
-                        $backEndHtmlFile = $extensionPrefix . $localBlockConfig['configurations']['backEndHtmlFile'];
-                        include $backEndHtmlFile;
-                        
-                    } 
-                    
-                    $blockList = $extensionPrefix . '/page_assembler/block_list.json';
-                    $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->team->team1;
-                    
+                    if (count($pageContent)>0){
+                        foreach ($pageContent as $block => $value) {
+                            $blockPath = $pageContent[$block]['type'];                    
+                            $blockJSON =  $pageContent[$block]['content'];                   
+                            $content = json_decode($blockJSON, true);
+                            $localBlockConfig = json_decode( file_get_contents($blockPath,true) , true);
+                            $content['orderID'] = $pageContent[$block]['order_id'];
+                            $content['parentId'] = $pageContent[$block]['parent_id'];
+                            $backEndHtmlFile = $localBlockConfig['configurations']['backEndHtmlFile'];
+                            include $extensionPrefix . $backEndHtmlFile;
+                        }  
+                    }                   
                 }
         }
         
-        $settings[""] = [
-            "type" 		=> "submit", 
-            "name" 		=> "addblock", 
-            "value" 	=> $lang['admin']['save'], 
-            'form_line'	=> 'form-not-line',
-        ];
-    
-   
-        $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_add'], $formClass->form());
+       
 
         ?>
         <div class="card">
@@ -189,14 +191,16 @@ if (isset($url['c'])) {
 			</div>
 			<div class="body clearfix">
                 <?php
+                    checkBlockListStatus();
                     $block_list_json = file_get_contents('../extensions/page_assembler/block_list.json');
+                   
                     $block_list = json_decode($block_list_json, true);
                     $categoriesCount  = 0;
                 ?>
                     
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                    <?php foreach ($block_list as $key => $category){ $categoriesCount ++; ?>
+                    <?php foreach ($block_list['content'] as $key => $category){ $categoriesCount ++; ?>
                         <li role="presentation"<?php echo ($categoriesCount === 1 ? ' class="active"' : ''); ?>>
                             <a href="#<?php echo $key; ?>" data-toggle="tab">
                                 <?php echo ucfirst($key.' blocks'); ?>
@@ -209,18 +213,18 @@ if (isset($url['c'])) {
                 <div class="tab-content">
                 <?php $pathArray = explode('/' , $_SERVER['REQUEST_URI']); ?>
                 <?php for ($i = 0; $i < (sizeof($pathArray)-1); $i++):?>
-                <?php $out[] = $pathArray[$i] ?>
+                    <?php $out[] = $pathArray[$i] ?>
                 <?php endfor ?>
                 <?php $realPath = implode('/', $out); ?> 
                 <?php $categoriesCount = 0; ?>
-                    <?php foreach ($block_list as $key => $category){ $categoriesCount ++; ?>
+                    <?php foreach ($block_list['content'] as $key => $category){ $categoriesCount ++; ?>
                         <?php $categoryName = $key; ?>
                         <div role="tabpanel" class="tab-pane fade <?php echo ($categoriesCount === 1 ? ' active in' : ''); ?>" id="<?php echo $key ?>">
                             <b><?php echo ucfirst($key); ?></b>
                             <p>
                                 <?php foreach ($category as $key => $block){ ?>
                                     <li>
-                                        <?php echo '<a tabindex="-1" class="add-block test" href="'.$realPath.'/admin;a,pageAssembler;c,edit;pageid,'.$_GET['pageId'].';insertBlock,'.$key.';blockType,'.$categoryName.'">' ?>
+                                        <?php echo '<a tabindex="-1" href="' . $realPath . '/admin;a,pageAssembler;c,edit;pageId,' . $_GET['pageId'] . ';insertBlock,' . $key . ';blockType,' . $categoryName . '">' ?>
                                             <?php echo ucfirst($key.' block') ?>
                                         </a>
                                     </li>
@@ -259,7 +263,7 @@ if (isset($url['c'])) {
                 "name" 		=> "reg"
             ]
         ];
-        echo '<a href="http://localhost:8081/2lvl/Tadas/tadasm/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
+        echo '<a href="http://localhost:8080/block_manager/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
         pageAssemblerDBexist('pa_page_settings');
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_list'], $formClass->form());
