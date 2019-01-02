@@ -198,13 +198,22 @@ if (isset($url['c'])) {
                     $block_list = json_decode($block_list_json, true);
                     $categoriesCount  = 0;
                 ?>
+
+                <!-- Page Path -->
+                <?php 
+                    $pathArray = explode('/' , $_SERVER['REQUEST_URI']);
+                    for ($i = 0; $i < (sizeof($pathArray)-1); $i++){
+                        $out[] = $pathArray[$i];
+                    }
+                    $realPath = implode('/', $out); 
+                ?>
                     
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tab-nav-right" role="tablist">
                     <?php foreach ($block_list as $key => $category){ $categoriesCount ++; ?>
-                        <li role="presentation"<?php echo ($categoriesCount === 1 ? ' class="active"' : ''); ?>>
+                        <li role="presentation"<?php echo ($categoriesCount === 1 ? ' class="active"' : '') ?>>
                             <a href="#<?php echo $key; ?>" data-toggle="tab">
-                                <?php echo ucfirst($key.' blocks'); ?>
+                                <?php echo ucfirst($key.' blocks') ?>
                             </a>
                         </li>
                     <?php } ?>
@@ -212,21 +221,16 @@ if (isset($url['c'])) {
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                <?php $pathArray = explode('/' , $_SERVER['REQUEST_URI']); ?>
-                <?php for ($i = 0; $i < (sizeof($pathArray)-1); $i++):?>
-                <?php $out[] = $pathArray[$i] ?>
-                <?php endfor ?>
-                <?php $realPath = implode('/', $out); ?> 
                 <?php $categoriesCount = 0; ?>
                     <?php foreach ($block_list as $key => $category){ $categoriesCount ++; ?>
                         <?php $categoryName = $key; ?>
                         <div role="tabpanel" class="tab-pane fade <?php echo ($categoriesCount === 1 ? ' active in' : ''); ?>" id="<?php echo $key ?>">
-                            <b><?php echo ucfirst($key); ?></b>
+                            <b><?php echo ucfirst($key) ?></b>
                             <p>
                                 <?php foreach ($category as $key => $block){ ?>
                                     <li>
                                         <?php echo '<a tabindex="-1" class="add-block test" href="'.$realPath.'/admin;a,pageAssembler;c,edit;pageid,'.$_GET['pageId'].';insertBlock,'.$key.';blockType,'.$categoryName.'">' ?>
-                                            <?php echo ucfirst($key.' block') ?>
+                                            <?php echo ucfirst(strtr($key, "_", " ").' block') ?>
                                         </a>
                                     </li>
                                 <?php } ?>
@@ -250,7 +254,6 @@ if (isset($url['c'])) {
             }
     </script>
     <script type="text/javascript" src="js/page-assembler.js"></script>
-    <script src="js/blocks.js"></script>   
             
     <?php }  
     if ($url['c'] == 'list') {

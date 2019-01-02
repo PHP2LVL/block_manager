@@ -16,8 +16,8 @@ $('.add-block').on('click', function() {
     );
 }); */
 
-$('.dropdown-submenu a.test').on("click", function(e){
+/* $('.dropdown-submenu a.test').on("click", function(e){
     $(this).next('ul').toggle();
     e.stopPropagation();
-    //e.preventDefault();
-});
+    e.preventDefault();
+}); */
