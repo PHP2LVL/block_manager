@@ -60,7 +60,7 @@ if (isset($url['c'])) {
             ];
        
             $formClass = new Form($settings);
-            lentele($lang['admin']['pageassembler_add'], $formClass->form());
+            lentele($lang['pageAssembler']['new_page'], $formClass->form());
         ?>         
     <script src="../dievai/js/manuimage.js"></script>
     <?php } 
@@ -122,7 +122,7 @@ if (isset($url['c'])) {
             
            
                 $formClass = new Form($settings);
-                lentele($lang['admin']['pageassembler_add'], $formClass->form());
+                lentele($lang['pageAssembler']['new_page'], $formClass->form());
                 
             }
 
@@ -141,11 +141,11 @@ if (isset($url['c'])) {
                 unset($sql);
                 $_SESSION['page-assembler-pageId'] = null;
                 redirect(
-                    url("?id," . $url['id'] . ";c," . $url['c']),
+                    url("?id," . $url['id'] . ";a," . $url['a'] .";c," . $url['c'] .";pageId," . $url['pageId']),
                     "header",
                     [
                         'type'		=> 'success',
-                        'message' 	=> $lang['admin']['pa-noPage']
+                        'message' 	=> $lang['pageAssembler']['blockAdded']
                     ]
                 );
                 
@@ -156,20 +156,10 @@ if (isset($url['c'])) {
                 $sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "pa_data` WHERE page_id = " . escape($pageId) . " ORDER BY ID ASC";
                 $pageContent = mysql_query1($sql);
                 unset($sql);
-                if (!$pageContent){
-                    $_SESSION['page-assembler-pageId'] = null;
-                    redirect(
-                        url("?id," . $url['id'] . ";c," . $url['c']),
-                        "header",
-                        [
-                            'type'		=> 'success',
-                            'message' 	=> $lang['admin']['pa-noPage']
-                        ]
-                    );
-                } else {
+                if ($pageContent) {
                     $extensionPrefix = "../extensions";
                     echo '<div id="page-builder-zone">';
-                    if (count($pageContent)>0){
+                    if (count($pageContent) > 0){
                         foreach ($pageContent as $block => $value) {
                             $blockPath = $pageContent[$block]['type'];                    
                             $blockJSON =  $pageContent[$block]['content'];                   
@@ -187,6 +177,7 @@ if (isset($url['c'])) {
        
 
         ?>
+        </div>
         <div class="card">
 			<div class="header">
 				<h2>Add New Block</h2>
@@ -226,7 +217,7 @@ if (isset($url['c'])) {
                             <p>
                                 <?php foreach ($category as $key => $block){ ?>
                                     <li>
-                                        <?php echo '<a tabindex="-1" href="' . $realPath . '/admin;a,pageAssembler;c,edit;pageid,' . $_GET['pageId'] . ';insertBlock,' . $key . ';blockType,' . $categoryName . '">' ?>
+                                        <?php echo '<a tabindex="-1" href="' . $realPath . '/admin;a,pageAssembler;c,edit;pageId,' . $_GET['pageId'] . ';insertBlock,' . $key . ';blockType,' . $categoryName . '">' ?>
                                             <?php echo ucfirst($key.' block') ?>
                                         </a>
                                     </li>
@@ -237,7 +228,7 @@ if (isset($url['c'])) {
                 </div>
 			</div>
 		</div>
-        </div>
+
         <script>
             function CssFileItraukimas(){
                 var link = document.createElement( "link" );
