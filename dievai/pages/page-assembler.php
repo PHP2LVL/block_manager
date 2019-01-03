@@ -188,6 +188,7 @@ if (isset($url['c'])) {
                 echo '</div>';
             echo '</div>';
         echo '</div>';
+
         if (isset($_POST['edit'])) {
             //$irasoAtnaujinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
         }elseif (isset($_POST['delete'])) {
@@ -196,70 +197,7 @@ if (isset($url['c'])) {
             
 
         }
-
-
-
-
-        //$li         = ! empty($data) ? build_menu_admin($data) : '';
-        //$pageMenu   = '<div class="dd nestable-with-handle">' . $li . '</div>';
-        //if (!empty($sqlPages)) {
-            //foreach ($sqlPages as $page) {
-                //$page .= '<li class="dd-handle">'
-
-            //}
-        //}
-        
-        //var_dump($row);
-        //foreach ($sqlPages as $puslapiai) {
-            //echo $puslapiai['pavadinimas'] . "<br/>";
-            //echo "<a>" .$puslapiai['pavadinimas']  ."</a>" . "<br/>";
-        //}
-        //echo "<a href = 'puslapiai/naujienos.php'>"  .$sqlPages[0]['pavadinimas']  ."</a>" ."<br/>";
-        //echo "<a href = 'puslapiai/apie.php'>"  .$sqlPages[1]['pavadinimas']  ."</a>" ."" "<br/>";
-        //echo "<a href = 'puslapiai/paieska.php'>"  .$sqlPages[2]['pavadinimas']  ."</a>" ."<br/>";
-        //echo "<a href = 'puslapiai/kontaktai.php'>"  .$sqlPages[3]['pavadinimas']  ."</a>" ."<br/>";
-
-        /*
-        foreach ($sqlPages as $row) {
-            $data[$row['parent']][] = $row;
-        }
-        $li         = ! empty($data) ? build_menu_admin($data) : '';
-        $pageMenu   = '<div class="dd nestable-with-handle">' . $li . '</div>';
-        $sqlOtherPages = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' AND `lang` = " . escape( lang() ) . " order by id" );
-        $otherPages = '<ol class="dd-list">';
-        if (! empty($sqlOtherPages)) {
-            foreach ($sqlOtherPages as $otherPage) {
-                $otherPages .= '<li class="dd-handle">
-                <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $otherPage['id'] ) . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')">
-                <img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" />
-                </a>
-                <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $otherPage['id'] ) . '" >
-                <img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" />
-                </a>
-                <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $otherPage['id'] ) . '">
-                <img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '"/>
-                </a>
-                ' . $otherPage['pavadinimas'] . '
-                </li>';
-            }   
-        }
-        $otherPages .= '</ol>';
-        */
-        $settings = [
-            
-            "Form" => [
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> "reg"
-            ]
-        ];
-            
-        $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_list'], $formClass->form());
-
+       
     }
     if ($url['c'] == 'settings') {
         
