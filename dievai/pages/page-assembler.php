@@ -12,6 +12,10 @@ if(BUTTONS_BLOCK) {
 	lentele($lang['admin']['pageassembler'], buttonsMenu(buttons('pageassembler')));
 }
 
+if (pageAssemblerDBexist("pa_page_settings")){
+   //return error notifyMsg           
+}
+
 if (isset($url['c'])) {
     if ($url['c'] == 'main') {
         $extensionPrefix = "../extensions";
@@ -185,9 +189,7 @@ if (isset($url['c'])) {
         ?>
         <div class="card">
 			<div class="header">
-				<h2>
-                    Add New Block
-                </h2>
+				<h2>Add New Block</h2>
 			</div>
 			<div class="body clearfix">
                 <?php
@@ -211,12 +213,12 @@ if (isset($url['c'])) {
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                <?php $pathArray = explode('/' , $_SERVER['REQUEST_URI']); ?>
-                <?php for ($i = 0; $i < (sizeof($pathArray)-1); $i++):?>
-                    <?php $out[] = $pathArray[$i] ?>
-                <?php endfor ?>
-                <?php $realPath = implode('/', $out); ?> 
-                <?php $categoriesCount = 0; ?>
+                    <?php $pathArray = explode('/' , $_SERVER['REQUEST_URI']); ?>
+                    <?php for ($i = 0; $i < (sizeof($pathArray)-1); $i++):?>
+                        <?php $out[] = $pathArray[$i] ?>
+                    <?php endfor ?>
+                    <?php $realPath = implode('/', $out); ?> 
+                    <?php $categoriesCount = 0; ?>
                     <?php foreach ($block_list['content'] as $key => $category){ $categoriesCount ++; ?>
                         <?php $categoryName = $key; ?>
                         <div role="tabpanel" class="tab-pane fade <?php echo ($categoriesCount === 1 ? ' active in' : ''); ?>" id="<?php echo $key ?>">
@@ -224,7 +226,7 @@ if (isset($url['c'])) {
                             <p>
                                 <?php foreach ($category as $key => $block){ ?>
                                     <li>
-                                        <?php echo '<a tabindex="-1" href="' . $realPath . '/admin;a,pageAssembler;c,edit;pageId,' . $_GET['pageId'] . ';insertBlock,' . $key . ';blockType,' . $categoryName . '">' ?>
+                                        <?php echo '<a tabindex="-1" href="' . $realPath . '/admin;a,pageAssembler;c,edit;pageid,' . $_GET['pageId'] . ';insertBlock,' . $key . ';blockType,' . $categoryName . '">' ?>
                                             <?php echo ucfirst($key.' block') ?>
                                         </a>
                                     </li>
@@ -235,38 +237,69 @@ if (isset($url['c'])) {
                 </div>
 			</div>
 		</div>
-    </div>
-    <script>
-        function CssFileItraukimas(){
-            var link = document.createElement( "link" );
-            src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
-            link.href = src;
-            link.type = "text/css";
-            link.rel = "stylesheet";
-            link.media = "screen,print";
+        </div>
+        <script>
+            function CssFileItraukimas(){
+                var link = document.createElement( "link" );
+                src="../dievai/css/Test.css"; //pakeisti css faila i reikiama
+                link.href = src;
+                link.type = "text/css";
+                link.rel = "stylesheet";
+                link.media = "screen,print";
 
-            document.getElementsByTagName( "head" )[0].appendChild( link );
-            }
-    </script>
-    <script type="text/javascript" src="js/page-assembler.js"></script>
-    <script src="js/blocks.js"></script>   
-            
-    <?php }  
+                document.getElementsByTagName( "head" )[0].appendChild( link );
+                }
+        </script>
+        <script type="text/javascript" src="js/page-assembler.js"></script>
+        <script src="js/blocks.js"></script>   
+        <?php
+    }  
+    
+
     if ($url['c'] == 'list') {
-        $settings = [ 
-            "Form" => [
-                "action" 	=> "", 
-                "method" 	=> "post", 
-                "enctype" 	=> "", 
-                "id" 		=> "", 
-                "class" 	=> "", 
-                "name" 		=> "reg"
-            ]
-        ];
-        echo '<a href="http://localhost:8080/block_manager/dievai/admin;a,pageAssembler;c,edit;pageId,1;insertBlock,col_2_text_1_img;blockType,text">Page1</a>';
-        pageAssemblerDBexist('pa_page_settings');
-        $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_list'], $formClass->form());
+
+        // Page Path    
+        $pathArray = explode('/' , $_SERVER['REQUEST_URI']);
+            for ($i = 0; $i < (sizeof($pathArray)-1); $i++){
+                $out[] = $pathArray[$i];
+            }
+        $realPath = implode('/', $out); 
+                
+        echo '<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">';
+            echo '<div class="card">';
+                echo '<div class="header">';
+                    echo '<h2>Puslapių sąrašas';     
+                echo '</div>';
+                echo '<div class="body clearfix">';
+                    echo '<div class="dd nestable-with-handle">';
+                        $selectSql = mysql_query1("SELECT *FROM `" . LENTELES_PRIESAGA . "pa_page_settings`");
+                        foreach ($selectSql as $irasas){
+                            echo '<ol class="dd-list">';
+                                echo '<li class="dd-item dd3-item" data-id="1">';
+                                    echo '<div class="dd-handle dd3-handle"></div>';
+                                    echo '<div class="dd3-content">';
+                                        echo '<form method = "post" id="pageListForm">';
+                                            echo '<input type="submit" id="edit" value="edit" name="edit"></input>';
+                                            echo '<input type="submit" id="delete" value="delete" name="delete"></input>';
+                                        echo '</form>';
+                                        echo '<a href=' . $realPath . '/admin;a,pageAssembler;c,edit;pageId,' . $irasas['page_id'] . '>' . $irasas['title'] . '</a>';
+                                    echo '</div>';
+                                echo '</li>';
+                            echo '</ol>';
+                        }
+                    echo '</div>';			
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
+
+        if (isset($_POST['edit'])) {
+            //$irasoAtnaujinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
+        }elseif (isset($_POST['delete'])) {
+            $title = $irasas['title'];
+            $irasoTrinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
+
+        }
+       
     }
     if ($url['c'] == 'settings') {
         
@@ -279,27 +312,19 @@ if (isset($url['c'])) {
             $metaDescription =  escape($_POST['metaAprasymas']);
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['F_urls']);
-
-            $insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
-            (`page_id`,`title`,`lang`,`meta_title`,`meta_desc`,`meta_keywords`,`friendly_url`) 
-            VALUES (" . $pageId . ", '" . $title . "', '" . $lang . "', '" . $metaTitle . "', '" . $metaDescription . "', '" . $metaKeywords . "', '" . $friendlyUrl . "')";
-            
-            if(mysql_query1($insertQuery)) {
-               
-                redirect(
-                    url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
-                    "header",
-                    [
-                        'type'      => 'success',
-                        'message'   => $lang['admin']['configuration_updated']
-                    ]
-                ); 
-            }
-            
+            $statusID = escape($_POST['rodymas']);
+            $insertQuery = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
+            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`status_id`,`friendly_url`) 
+            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $statusID ."," . $friendlyUrl .")");
+/*
+            $sql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET page_id=id, SET lang='$lang'");
+            $sql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET lang='$lang'");
+*/
+           
             
         }
+        
         $settings = [
-            //$conf = [];
             "Form" => [
                 "action"    => "", 
                 "method"    => "post", 
@@ -307,25 +332,31 @@ if (isset($url['c'])) {
             ],
             $lang['admin']['title']  => [
                 "type"  => "text", 
-                "value" => input($result['title'] ), 
+                "value" => input($insertQuery['title'] ), 
                 "name"  => "Pavadinimas"
             ],
             $lang['admin']['metaTitle']  => [
                 "type"  => "text", 
-                "value" => input($result['meta_title'] ), 
+                "value" => input($insertQuery['meta_title'] ), 
                 "name"  => "metaPavadinimas"
             ],
             $lang['admin']['metaDescription']  => [
                 "type"  => "text", 
-                "value" => input($result['meta_desc'] ), 
+                "value" => input($insertQuery['meta_desc'] ), 
                 "name"  => "metaAprasymas"
             ],
             $lang['admin']['metaKeywords']  => [
                 "type"  => "text", 
-                "value" => input($result['meta_keywords'] ), 
+                "value" => input($insertQuery['meta_keywords'] ), 
                 "name"  => "metaKeywords"
             ],
-            
+            $lang['admin']['statusID'] => [
+                "type"  => "switch", 
+                "value" => 1, 
+                "name"  => "rodymas",
+                'form_line' => 'form-not-line',
+                'checked'   => (input($insertQuery['status_id']) === 1)
+            ],
             "Friendly url:"             => [
                 "type"      => "select", 
                 "value"     =>  [
@@ -333,7 +364,7 @@ if (isset($url['c'])) {
                     ';'=> ';', 
                     '0'=> $lang['admin']['off']
                 ], 
-                "selected"  => $result['friendly_url'], 
+                "selected"  => $insertQuery['friendly_url'], 
                 "name"      => "F_urls"
             ],
             ""                                     => [
@@ -345,11 +376,18 @@ if (isset($url['c'])) {
         ];
         $formClass = new Form($settings);
         lentele($lang['admin']['pageassembler_settings'], $formClass->form());
-}
+    }
     //Section for editing page settings
     if ($url['c'] == 'settings' && isset($url['p'])){
         var_dump($_GET);
         echo $url['p'];
     }
+    ?>
+    <div class='modal-insert-place'></div>
+    
+    <script src="../dievai/js/menuclick.js" async></script>
+    <script src="../dievai/js/class.insertblock.js" async></script>
+
+    <?php   
 }
 ?>
