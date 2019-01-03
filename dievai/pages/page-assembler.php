@@ -194,8 +194,14 @@ if (isset($url['c'])) {
         }elseif (isset($_POST['delete'])) {
             $title = $irasas['title'];
             $irasoTrinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
-            
-
+            redirect(
+                url($realPath.'admin;a,pageAssembler;c,list'),
+                "header",
+                [
+                    'type'      => 'success',
+                    'message'   => $lang['admin']['page_deleted']
+                ]
+            );
         }
        
     }

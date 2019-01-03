@@ -23,6 +23,7 @@ $lang['admin']['metaTitle'] = 'Meta pavadinimas';
 $lang['admin']['metaDescription'] = 'Meta aprašymas';
 $lang['admin']['metaKeywords'] = 'Meta raktazodziai';
 $lang['admin']['statusID'] = 'Puslapio rodymas';
+$lang['admin']['page_deleted'] = 'Puslapis sėkmingai ištrintas';
 
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
