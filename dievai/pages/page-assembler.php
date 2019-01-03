@@ -90,7 +90,7 @@ if (isset($url['c'])) {
                 $blockType = $_GET['blockType'];
                 $extensionPrefix = "../extensions";
                 $blockList = $extensionPrefix . '/page_assembler/block_list.json';               
-                $blockPath = json_decode(file_get_contents($blockList))->content->{$blockType}->{$blockName}; //col_2_text_1_img;
+                $blockPath = json_decode(file_get_contents($blockList))->content->{$blockType}->{$blockName};
                 $blockJSON = file_get_contents($blockPath,true);
                 $json = json_decode($blockJSON, true);
                 $content = $json['content'];
@@ -259,25 +259,21 @@ if (isset($url['c'])) {
         echo '<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">';
             echo '<div class="card">';
                 echo '<div class="header">';
-                    echo '<h2>Puslapių sąrašas';     
+                    echo '<h2>' . $lang['pageAssembler']['pageassembler_list'] . '</h2>';     
                 echo '</div>';
                 echo '<div class="body clearfix">';
-                    echo '<div class="dd nestable-with-handle">';
+                    echo '<div>';
                         $selectSql = mysql_query1("SELECT *FROM `" . LENTELES_PRIESAGA . "pa_page_settings`");
+                        echo '<ul>';
                         foreach ($selectSql as $irasas){
-                            echo '<ol class="dd-list">';
-                                echo '<li class="dd-item dd3-item" data-id="1">';
-                                    echo '<div class="dd-handle dd3-handle"></div>';
-                                    echo '<div class="dd3-content">';
-                                        echo '<form method = "post" id="pageListForm">';
-                                            echo '<input type="submit" id="edit" value="edit" name="edit"></input>';
-                                            echo '<input type="submit" id="delete" value="delete" name="delete"></input>';
-                                        echo '</form>';
-                                        echo '<a href=' . $realPath . '/admin;a,pageAssembler;c,edit;pageId,' . $irasas['page_id'] . '>' . $irasas['title'] . '</a>';
-                                    echo '</div>';
-                                echo '</li>';
-                            echo '</ol>';
+                            $content = '
+                            <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $irasas['page_id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
+                            <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';c,settings;pageId,' . $irasas['page_id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['pageAssembler']['pageassembler_settings'] . '" align="right" /></a>
+                            <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';c,edit;pageId,' . $irasas['page_id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
+                            ' . $irasas['title'];
+                            echo '<li>' . $content . '</li>';
                         }
+                        echo '</ul>';
                     echo '</div>';			
                 echo '</div>';
             echo '</div>';
