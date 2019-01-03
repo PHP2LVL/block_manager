@@ -11,8 +11,8 @@ $lang['admin']['configuration_updated'] = 'Nustatymai sėkmingai atnaujinti!';
 $lang['admin']['configuration_main'] = 'Pagrindiniai nustatymai';
 $lang['admin']['configuration_seo'] = 'SEO nustatymai';
 $lang['pageAssembler']['new_page'] = 'Naujas puslapis';
-$lang['admin']['pageassembler_settings'] = 'Nustatymai';
-$lang['admin']['pageassembler_list'] = 'Puslapių sąrašas';
+$lang['pageAssembler']['pageassembler_settings'] = 'Nustatymai';
+$lang['pageAssembler']['pageassembler_list'] = 'Puslapių sąrašas';
 $lang['pageAssembler']['pa-noPage'] = 'Duomenų bazėje tokio puslapio nėra';
 $lang['pageAssembler']['blockAdded'] = 'Blokas pridėtas';
 
