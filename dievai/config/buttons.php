@@ -108,7 +108,7 @@ $buttons = [
     ],
     'pageAssembler' => [
         [
-            'url' 	=> url("?id,999;a,pageAssembler;c,main"),
+            'url' 	=> url("?id,999;a,pageAssembler;c,settings"),
             'value'	=> $lang['pageAssembler']['new_page'],
             'icon'	=> adminIcon('blocks', 'main')
         ],
@@ -116,11 +116,6 @@ $buttons = [
             'url' 	=> url("?id,999;a,pageAssembler;c,list"),
             'value'	=> $lang['pageAssembler']['pageassembler_list'],
             'icon'	=> adminIcon('blocks', 'list')
-        ],
-        [
-            'url' 	=> url("?id,999;a,pageAssembler;c,settings"),
-            'value'	=> $lang['pageAssembler']['pageassembler_settings'],
-            'icon'	=> adminIcon('blocks', 'settings')
         ]
     ]
 ];
