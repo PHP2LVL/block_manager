@@ -15,6 +15,8 @@ $lang['pageAssembler']['pageassembler_settings'] = 'Nustatymai';
 $lang['pageAssembler']['pageassembler_list'] = 'Puslapių sąrašas';
 $lang['pageAssembler']['pa-noPage'] = 'Duomenų bazėje tokio puslapio nėra';
 $lang['pageAssembler']['blockAdded'] = 'Blokas pridėtas';
+$lang['pageAssembler']['page_url'] = "Draugiškas url";
+$lang['pageAssembler']['page_settings_saved'] = "Puslapio nustatymai išsaugoti";
 
 $lang['admin']['configuration_maintenance'] = 'Remonto nustatymai';
 $lang['setup']['lang'] = 'Kalba';
@@ -24,7 +26,7 @@ $lang['setup']['heading'] = 'MightMedia TVS įdiegimas';
 $lang['admin']['title'] = 'Title';
 $lang['admin']['metaTitle'] = 'Meta pavadinimas';
 $lang['admin']['metaDescription'] = 'Meta aprašymas';
-$lang['admin']['metaKeywords'] = 'Meta raktazodziai';
+$lang['admin']['metaKeywords'] = 'Meta raktažodžiai';
 $lang['admin']['statusID'] = 'Puslapio rodymas';
 
 //Papildymas - antras

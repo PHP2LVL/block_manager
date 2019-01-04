@@ -31,8 +31,7 @@
 					break;
 				case 'pa_page_settings':
 					$sql1 = "CREATE TABLE `" . LENTELES_PRIESAGA . "pa_page_settings` (
-						id INT(9) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-						page_id INT(9),
+						page_id INT(9) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 						title TEXT,
 						lang TEXT,
 						meta_title TEXT,

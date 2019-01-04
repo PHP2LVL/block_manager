@@ -17,54 +17,7 @@ if (pageAssemblerDBexist("pa_page_settings")){
 }
 
 if (isset($url['c'])) {
-    if ($url['c'] == 'main') {
-        $extensionPrefix = "../extensions";
-        $blockList = $extensionPrefix . '/page_assembler/block_list.json';
-        $blockPath = $extensionPrefix . json_decode(file_get_contents($blockList))->text->col_2_text_1_img;
-        $blockJSON = file_get_contents($blockPath,true);
-        $json = json_decode($blockJSON, true);
-        
-        if (empty($_POST)){
-            $content = $json['content'];
-        }
-        
-
-        $backEndHtmlFile = $extensionPrefix . $json['configurations']['backEndHtmlFile'];
-        if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveBlockInfo'] ) ) {
-
-            $content = $json['content'];
-            $i=0;
-            array_pop($_POST);
-            foreach ($_POST as $row) {
-                $content[$i]['value'] = $row;
-                $i++;
-            }
-            include $backEndHtmlFile;
-
-
-        }
-        if (empty($_POST)){
-            $settings = [
-                "Form"  => [
-                    "action" 	=> "", 
-                    "method" 	=> "post", 
-                    
-                ],
-
-                ''      => [
-                    "type" 		=> "submit", 
-                    "name" 		=> "saveBlockInfo", 
-                    "value" 	=> $lang['admin']['save'], 
-                    'form_line'	=> 'form-not-line',
-                ]
-            ];
-       
-            $formClass = new Form($settings);
-            lentele($lang['pageAssembler']['new_page'], $formClass->form());
-        ?>         
-    <script src="../dievai/js/manuimage.js"></script>
-    <?php } 
-    }
+ 
     
     if ($url['c'] == 'edit'){
         if (isset($_SESSION['page-assembler-pageId']) && !isset( $_GET['pageId'] )){
@@ -279,36 +232,67 @@ if (isset($url['c'])) {
             echo '</div>';
         echo '</div>';
 
-        if (isset($_POST['edit'])) {
-            //$irasoAtnaujinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
-        }elseif (isset($_POST['delete'])) {
-            $title = $irasas['title'];
-            $irasoTrinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE title='$title'");
+        if (isset($_POST['delete'])) {
+            $page_id =  $irasas['page_id'];
+            $irasoTrinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE page_id = $page_id");
 
         }
        
     }
     if ($url['c'] == 'settings') {
-        
-
         if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
-            $pageId = $insertQuery['id'];
+            $pageId = isset($_POST['page_id']) ? $_POST['page_id'] : null;
             $title =  escape($_POST['Pavadinimas']);
-            $lang = lang(); 
+            $lang = escape( lang() ); 
             $metaTitle = escape($_POST['metaPavadinimas']);
             $metaDescription =  escape($_POST['metaAprasymas']);
             $metaKeywords = escape($_POST['metaKeywords']);
-            $friendlyUrl = escape($_POST['F_urls']);
-            $statusID = escape($_POST['rodymas']);
-            $insertQuery = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings`
-            (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`status_id`,`friendly_url`) 
-            VALUES (" . $title . "," . $metaTitle ."," . $metaDescription . "," . $metaKeywords ."," . $statusID ."," . $friendlyUrl .")");
-/*
-            $sql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET page_id=id, SET lang='$lang'");
-            $sql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET lang='$lang'");
-*/
-           
+            $friendlyUrl = escape($_POST['fUrl']);
+            $statusID = isset($_POST['rodymas']) ? '1' : '0' ;
+            $sqlCheckPageIDstatus = "SELECT * FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE page_id = " . escape($pageId);
+            if (!mysql_query1($sqlCheckPageIDstatus)){
+                $sqlPageSettings = 
+                    "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings` (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`status_id`,`friendly_url`, `lang`)
+                     VALUES (" . $title . "," . $metaTitle . "," . $metaDescription . "," . $metaKeywords . "," . $statusID . "," . $friendlyUrl . "," . $lang . ")";
+                   
+            } else {
+                $sqlPageSettings =
+                "UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET title = $title, meta_title = $metaTitle, meta_desc = $metaDescription, 
+                 meta_keywords = $metaKeywords, status_id = $statusID, friendly_url = $friendlyUrl , lang = $lang
+                 WHERE page_id = $pageId";
+            }
+            $result = mysql_query1($sqlPageSettings); 
+            if ($result){
+                if (!isset($_POST['page_id'])){
+                    redirect(
+                        url("?id," . $url['id'] . ";a," . $url['a'] . ";c,list"),
+                        "header",
+                        [
+                            'type'		=> 'success',
+                            'message' 	=> $lang['pageAssembler']['page_settings_saved']
+                        ]            
+                    );
+                } else {
+                    $pageId = $prisijungimas_prie_mysql->insert_id;
+                    redirect(
+                        url("?id," . $url['id'] . ";a," . $url['a'] . ";c,edit;pageId," . $pageId),
+                        "header",
+                        [
+                            'type'		=> 'success',
+                            'message' 	=> $lang['pageAssembler']['page_settings_saved']
+                        ]            
+                    );
+                }
+            }
             
+        }
+        if (isset($_GET['pageId'])){
+            $pageId = $_GET['pageId'];
+            $sqlPageSettings = "SELECT * FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE page_id = " . escape($pageId);
+            $pageSettings = mysql_query1($sqlPageSettings);
+            $pageSettings = $pageSettings[0];
+        } else {
+            $pageSettings = null;
         }
         
         $settings = [
@@ -317,44 +301,45 @@ if (isset($url['c'])) {
                 "method"    => "post", 
                 "name"      => "reg"
             ],
+           	"page_Id" => [
+                "type" 	=> "hidden", 
+                "name" 	=> "page_id", 
+				"value" =>  input( $pageSettings['page_id'] )
+			],
             $lang['admin']['title']  => [
                 "type"  => "text", 
-                "value" => input($insertQuery['title'] ), 
+                "value" => input( $pageSettings['title'] ), 
                 "name"  => "Pavadinimas"
             ],
             $lang['admin']['metaTitle']  => [
                 "type"  => "text", 
-                "value" => input($insertQuery['meta_title'] ), 
+                "value" => input($pageSettings['meta_title'] ), 
                 "name"  => "metaPavadinimas"
             ],
             $lang['admin']['metaDescription']  => [
                 "type"  => "text", 
-                "value" => input($insertQuery['meta_desc'] ), 
+                "value" => input($pageSettings['meta_desc'] ), 
                 "name"  => "metaAprasymas"
             ],
             $lang['admin']['metaKeywords']  => [
                 "type"  => "text", 
-                "value" => input($insertQuery['meta_keywords'] ), 
+                "value" => input($pageSettings['meta_keywords'] ), 
                 "name"  => "metaKeywords"
             ],
             $lang['admin']['statusID'] => [
-                "type"  => "switch", 
-                "value" => 1, 
-                "name"  => "rodymas",
-                'form_line' => 'form-not-line',
-                'checked'   => (input($insertQuery['status_id']) === 1)
+                'type'		=> 'switch',
+                'value'		=> '1',
+                'name'		=> 'rodymas',
+                'id'		=> 'rodymas',
+                'form_line'	=> 'form-not-line',
+                'checked' 	=> (input($pageSettings['status_id']) === '1' ? true : false),
             ],
-            "Friendly url:"             => [
-                "type"      => "select", 
-                "value"     =>  [
-                    '/'=> '/', 
-                    ';'=> ';', 
-                    '0'=> $lang['admin']['off']
-                ], 
-                "selected"  => $insertQuery['friendly_url'], 
-                "name"      => "F_urls"
+            $lang['pageAssembler']['page_url'] => [
+                "type"      => "text", 
+                "value"     =>  $pageSettings['friendly_url'],  
+                "name"      => "fUrl"
             ],
-            ""                                     => [
+            ""              => [
                 "type"      => "submit", 
                 "name"      => "Konfiguracija", 
                 "value"     => $lang['admin']['save'], 
@@ -362,12 +347,11 @@ if (isset($url['c'])) {
             ]
         ];
         $formClass = new Form($settings);
-        lentele($lang['admin']['pageassembler_settings'], $formClass->form());
-    }
-    //Section for editing page settings
-    if ($url['c'] == 'settings' && isset($url['p'])){
-        var_dump($_GET);
-        echo $url['p'];
+        if (isset($_GET['pageId'])){
+            lentele($lang['pageAssembler']['pageassembler_settings'], $formClass->form());
+        } else {
+            lentele($lang['pageAssembler']['new_page'], $formClass->form());
+        }
     }
     ?>
     <div class='modal-insert-place'></div>
